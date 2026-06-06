@@ -256,10 +256,13 @@ section { scroll-margin-top: 56px; }
 }
 .op-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 .op-icon {
-  width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--alazan), var(--caoba));
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  background: transparent;
+  border: 1.5px solid var(--alazan);
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px;
+  font-family: var(--ff-display); font-size: 14px; font-weight: 600;
+  color: var(--alazan); font-style: italic;
+  margin-top: 2px;
 }
 .op-card-title { font-size: 15px; font-weight: 600; color: var(--negro); margin-bottom: 4px; }
 .op-card-text { font-size: 13px; color: var(--tierra); line-height: 1.6; }
@@ -533,7 +536,101 @@ section { scroll-margin-top: 56px; }
 .cfs-text { font-size: 11px; color: rgba(245,222,179,0.5); line-height: 1.5; }
 
 /* ============================================================
-   06 HOJA DE RUTA
+   06 ARQUITECTURA
+   ============================================================ */
+.arq-sec {
+  padding: 100px 0;
+  background: var(--albero);
+}
+.arq-tabs {
+  display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap;
+}
+.arq-tab {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.05em;
+  padding: 8px 20px; border-radius: 20px;
+  border: 1.5px solid var(--polvo); background: var(--blanco);
+  color: var(--tierra); cursor: pointer;
+  transition: all 0.2s; user-select: none;
+  font-family: var(--ff-body);
+}
+.arq-tab:hover { border-color: var(--alazan); color: var(--alazan); }
+.arq-tab.active { background: var(--alazan); border-color: var(--alazan); color: #fff; }
+.arq-panel { display: none; }
+.arq-panel.active { display: block; }
+
+/* diagrama compartido */
+.arq-diagram {
+  background: var(--blanco); border-radius: var(--radius-lg);
+  border: 1px solid var(--polvo); padding: 32px 24px;
+  box-shadow: 0 2px 16px rgba(26,15,0,0.05);
+  overflow-x: auto;
+}
+.arq-layer { margin-bottom: 8px; }
+.arq-layer-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--tierra);
+  margin-bottom: 8px; padding-left: 2px;
+}
+.arq-row { display: flex; gap: 8px; align-items: stretch; flex-wrap: nowrap; }
+.arq-box {
+  flex: 1; min-width: 0; border-radius: 10px; padding: 12px 14px;
+  border: 1px solid; cursor: default;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.arq-box:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(26,15,0,0.1); }
+.arq-box-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.arq-box-sub { font-size: 11px; line-height: 1.4; opacity: 0.8; }
+.arq-arrow { display: flex; justify-content: center; align-items: center; height: 24px; color: var(--tierra); font-size: 14px; opacity: 0.5; }
+.arq-arrow-row { display: flex; gap: 8px; height: 20px; }
+.arq-arrow-row span { flex: 1; display: flex; justify-content: center; align-items: center; color: var(--tierra); font-size: 13px; opacity: 0.45; }
+
+.ab-amber { background: #FAEEDA; border-color: #BA7517; }
+.ab-amber .arq-box-title { color: #412402; }
+.ab-amber .arq-box-sub { color: #7A3B00; }
+
+.ab-teal { background: #E1F5EE; border-color: #1D9E75; }
+.ab-teal .arq-box-title { color: #04342C; }
+.ab-teal .arq-box-sub { color: #0F6E56; }
+
+.ab-purple { background: #EEEDFE; border-color: #7F77DD; }
+.ab-purple .arq-box-title { color: #26215C; }
+.ab-purple .arq-box-sub { color: #534AB7; }
+
+.ab-coral { background: #FAECE7; border-color: #D85A30; }
+.ab-coral .arq-box-title { color: #4A1B0C; }
+.ab-coral .arq-box-sub { color: #993C1D; }
+
+.ab-gray { background: var(--albero); border-color: var(--polvo); }
+.ab-gray .arq-box-title { color: var(--negro); }
+.ab-gray .arq-box-sub { color: var(--tierra); }
+
+.ab-verde { background: #E8F5F0; border-color: #2D7A5F; }
+.ab-verde .arq-box-title { color: #04342C; }
+.ab-verde .arq-box-sub { color: #2D7A5F; }
+
+.opt-header {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 6px 14px; border-radius: 6px;
+  margin-bottom: 10px; display: inline-block;
+}
+.opt-a-h { background: #E1F5EE; color: #085041; border: 1px solid #1D9E75; }
+.opt-b-h { background: #EEEDFE; color: #26215C; border: 1px solid #7F77DD; }
+
+.arq-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.arq-merge {
+  display: flex; align-items: center; gap: 10px;
+  margin: 12px 0; font-size: 11px; color: var(--tierra);
+}
+.arq-merge-line { flex: 1; height: 1px; background: var(--polvo); }
+
+@media (max-width: 640px) {
+  .arq-two-col { grid-template-columns: 1fr; }
+  .arq-row { flex-wrap: wrap; }
+  .arq-box { min-width: calc(50% - 4px); }
+}
+
+/* ============================================================
+   07 HOJA DE RUTA
    ============================================================ */
 .ruta-sec {
   padding: 100px 0;
@@ -645,6 +742,7 @@ footer {
     <li><a href="#como">Cómo funciona</a></li>
     <li><a href="#quiniela">La quiniela</a></li>
     <li><a href="#crm">CRM</a></li>
+    <li><a href="#arquitectura">Arquitectura</a></li>
     <li><a href="#ruta">Hoja de ruta</a></li>
   </ul>
   <div class="nav-hamburger" onclick="toggleMenu()" aria-label="Menú">
@@ -656,6 +754,7 @@ footer {
   <a href="#como" onclick="closeMenu()">Cómo funciona</a>
   <a href="#quiniela" onclick="closeMenu()">La quiniela</a>
   <a href="#crm" onclick="closeMenu()">CRM</a>
+  <a href="#arquitectura" onclick="closeMenu()">Arquitectura</a>
   <a href="#ruta" onclick="closeMenu()">Hoja de ruta</a>
 </div>
 
@@ -696,28 +795,28 @@ footer {
         <p class="section-lead reveal">Cada festejo reúne a cientos de personas con una pasión en común. Este sistema convierte esa energía en conocimiento real, relaciones duraderas y comunicación de valor.</p>
         <div class="op-cards">
           <div class="op-card reveal">
-            <div class="op-icon">👤</div>
+            <div class="op-icon">I</div>
             <div>
               <div class="op-card-title">Identidad del espectador</div>
               <div class="op-card-text">Nombre, contacto, edad, ciudad de procedencia y perfil taurino de cada persona que asiste a tus festejos.</div>
             </div>
           </div>
           <div class="op-card reveal">
-            <div class="op-icon">📊</div>
+            <div class="op-icon">II</div>
             <div>
               <div class="op-card-title">Inteligencia de temporada</div>
               <div class="op-card-text">Quién repite, a qué toreros sigue, desde qué ciudades viene tu público y qué festejos generan mayor participación.</div>
             </div>
           </div>
           <div class="op-card reveal">
-            <div class="op-icon">💬</div>
+            <div class="op-icon">III</div>
             <div>
               <div class="op-card-title">Comunicación directa y personalizada</div>
               <div class="op-card-text">Canal propio de comunicación con tu afición: email y SMS segmentados según el perfil de cada espectador.</div>
             </div>
           </div>
           <div class="op-card reveal">
-            <div class="op-icon">🏆</div>
+            <div class="op-icon">IV</div>
             <div>
               <div class="op-card-title">Fidelización activa</div>
               <div class="op-card-text">Un programa de quiniela que genera expectativa antes del festejo y mantiene el vínculo mucho más allá del día de la corrida.</div>
@@ -817,7 +916,7 @@ footer {
     <div class="quiniela-layout">
       <div class="q-form-card reveal">
         <div class="q-form-header">
-          <div class="q-form-header-title">Gran Corrida de la Feria · Sevilla</div>
+          <div class="q-form-header-title">Corrida de Toros · 26 de Septiembre</div>
           <div class="q-form-header-sub">Participa antes del inicio del festejo</div>
         </div>
         <div class="q-form-body">
@@ -1085,7 +1184,272 @@ footer {
   </div>
 </section>
 
-<!-- 06 HOJA DE RUTA -->
+<!-- 06 ARQUITECTURA -->
+<section id="arquitectura" class="arq-sec">
+  <div class="container">
+    <p class="section-eyebrow reveal">Arquitectura del sistema</p>
+    <h2 class="section-title reveal">El sistema, <em>capa a capa</em></h2>
+    <p class="section-lead reveal">Dos opciones de implementación técnica. Ambas convergen en GoHighLevel como CRM central. La diferencia está en las herramientas de cara al espectador.</p>
+
+    <div class="arq-tabs reveal">
+      <button class="arq-tab active" onclick="showTab('completo')">Vista completa</button>
+      <button class="arq-tab" onclick="showTab('opcionA')">Opción A · Todo en GHL</button>
+      <button class="arq-tab" onclick="showTab('opcionB')">Opción B · GHL como CRM</button>
+    </div>
+
+    <!-- PANEL: VISTA COMPLETA -->
+    <div class="arq-panel active" id="tab-completo">
+      <div class="arq-diagram reveal">
+
+        <div class="arq-layer">
+          <div class="arq-layer-label">① Entrada física</div>
+          <div class="arq-row">
+            <div class="arq-box ab-amber">
+              <div class="arq-box-title">Entrada impresa</div>
+              <div class="arq-box-sub">QR único por corrida</div>
+            </div>
+            <div style="display:flex;align-items:center;color:var(--tierra);opacity:0.4;padding:0 4px;">→</div>
+            <div class="arq-box ab-amber">
+              <div class="arq-box-title">Código QR</div>
+              <div class="arq-box-sub">URL con ID de corrida · Carteles · Zonas de paso</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arq-arrow">↓</div>
+
+        <div class="arq-layer">
+          <div class="arq-layer-label">② Landing page (por corrida)</div>
+          <div class="arq-row">
+            <div class="arq-box ab-teal">
+              <div class="arq-box-title">Landing page del festejo</div>
+              <div class="arq-box-sub">Cartel · Toreros · Reglas · Consentimiento RGPD · Ventana de participación activa</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arq-arrow">↓</div>
+
+        <div class="arq-layer">
+          <div class="arq-layer-label">③ Formulario de participación</div>
+          <div class="arq-row">
+            <div class="arq-box ab-teal">
+              <div class="arq-box-title">Datos personales</div>
+              <div class="arq-box-sub">Nombre · Email · Teléfono · Ciudad · Año de nacimiento</div>
+            </div>
+            <div class="arq-box ab-teal">
+              <div class="arq-box-title">Preguntas quiniela</div>
+              <div class="arq-box-sub">Orejas · Vuelta · Puerta grande · Estrella ×3</div>
+            </div>
+            <div class="arq-box ab-teal">
+              <div class="arq-box-title">Perfil espectador</div>
+              <div class="arq-box-sub">Abonado · Frecuencia · Torero favorito</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arq-arrow">↓</div>
+
+        <div class="arq-layer">
+          <div class="arq-layer-label">④ Herramientas — Opción A (todo en GHL) · Opción B (GHL como CRM)</div>
+          <div class="arq-two-col">
+            <div>
+              <div class="opt-header opt-a-h">Opción A · Todo en GoHighLevel</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div class="arq-box ab-verde">
+                  <div class="arq-box-title">Formulario GHL nativo</div>
+                  <div class="arq-box-sub">Sin integraciones externas</div>
+                </div>
+                <div class="arq-box ab-verde">
+                  <div class="arq-box-title">Landing · GHL Page Builder</div>
+                  <div class="arq-box-sub">Diseño dentro de la plataforma</div>
+                </div>
+                <div class="arq-box ab-verde">
+                  <div class="arq-box-title">QR nativo de GHL</div>
+                  <div class="arq-box-sub">Generado y gestionado desde GHL</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="opt-header opt-b-h">Opción B · GHL solo como CRM</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div class="arq-box ab-purple">
+                  <div class="arq-box-title">Formulario · Typeform</div>
+                  <div class="arq-box-sub">Mejor UX en móvil · Conversacional</div>
+                </div>
+                <div class="arq-box ab-purple">
+                  <div class="arq-box-title">Landing · Webflow o HTML</div>
+                  <div class="arq-box-sub">Mayor control de diseño</div>
+                </div>
+                <div class="arq-box ab-purple">
+                  <div class="arq-box-title">QR · QR.io o Beaconstac</div>
+                  <div class="arq-box-sub">QR dinámico con estadísticas de escaneo</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arq-merge">
+          <div class="arq-merge-line"></div>
+          <span style="font-size:11px;white-space:nowrap;">ambas opciones convergen en GHL</span>
+          <div class="arq-merge-line"></div>
+        </div>
+        <div class="arq-arrow" style="margin-top:-8px;">↓</div>
+
+        <div class="arq-layer">
+          <div class="arq-layer-label">⑤ CRM y automatización · GoHighLevel</div>
+          <div class="arq-row">
+            <div class="arq-box ab-coral">
+              <div class="arq-box-title">GoHighLevel — CRM central</div>
+              <div class="arq-box-sub">Contactos · Pipelines · Automatizaciones · Historial por espectador</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arq-arrow">↓</div>
+
+        <div class="arq-layer">
+          <div class="arq-layer-label">⑥ Automatizaciones y comunicación</div>
+          <div class="arq-row">
+            <div class="arq-box ab-coral">
+              <div class="arq-box-title">Automatización entrada</div>
+              <div class="arq-box-sub">Email/SMS de confirmación inmediata</div>
+            </div>
+            <div class="arq-box ab-coral">
+              <div class="arq-box-title">Resolución quiniela</div>
+              <div class="arq-box-sub">Resultado · Ganador · Premio</div>
+            </div>
+            <div class="arq-box ab-coral">
+              <div class="arq-box-title">Segmentación</div>
+              <div class="arq-box-sub">Abonado · Activo · Ocasional · Fan</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arq-arrow">↓</div>
+
+        <div class="arq-layer">
+          <div class="arq-row">
+            <div class="arq-box ab-gray">
+              <div class="arq-box-title">Email/SMS resultado</div>
+              <div class="arq-box-sub">A ganadores y participantes</div>
+            </div>
+            <div class="arq-box ab-gray">
+              <div class="arq-box-title">Ranking de temporada</div>
+              <div class="arq-box-sub">Acumulado corrida a corrida</div>
+            </div>
+            <div class="arq-box ab-gray">
+              <div class="arq-box-title">Campañas fidelización</div>
+              <div class="arq-box-sub">Segmentadas por perfil</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PANEL: OPCIÓN A -->
+    <div class="arq-panel" id="tab-opcionA">
+      <div class="arq-diagram reveal">
+        <div style="margin-bottom:16px;">
+          <div class="opt-header opt-a-h">Opción A · Todo en GoHighLevel</div>
+          <p style="font-size:13px;color:var(--tierra);margin-top:8px;line-height:1.6;">La solución más rápida de arrancar. Todo vive dentro de GHL: formulario, landing, QR y CRM. Sin integraciones externas, sin Zapier. El dato fluye de forma nativa de un punto al siguiente.</p>
+        </div>
+
+        <div class="arq-layer">
+          <div class="arq-layer-label">Entrada y captación</div>
+          <div class="arq-row">
+            <div class="arq-box ab-amber"><div class="arq-box-title">Entrada impresa</div><div class="arq-box-sub">QR generado por GHL</div></div>
+            <div style="display:flex;align-items:center;color:var(--tierra);opacity:0.4;padding:0 4px;">→</div>
+            <div class="arq-box ab-amber"><div class="arq-box-title">Carteles y zonas de paso</div><div class="arq-box-sub">Mismo QR dinámico</div></div>
+          </div>
+        </div>
+        <div class="arq-arrow">↓</div>
+        <div class="arq-layer">
+          <div class="arq-layer-label">Landing y formulario — GHL Page Builder</div>
+          <div class="arq-row">
+            <div class="arq-box ab-verde"><div class="arq-box-title">Landing page del festejo</div><div class="arq-box-sub">Construida en GHL · Cartel · Reglas · RGPD</div></div>
+            <div style="display:flex;align-items:center;color:var(--tierra);opacity:0.4;padding:0 4px;">→</div>
+            <div class="arq-box ab-verde"><div class="arq-box-title">Formulario GHL nativo</div><div class="arq-box-sub">Datos · Perfil · Quiniela · Envío directo al CRM</div></div>
+          </div>
+        </div>
+        <div class="arq-arrow">↓</div>
+        <div class="arq-layer">
+          <div class="arq-layer-label">CRM y automatización — todo en GHL</div>
+          <div class="arq-row">
+            <div class="arq-box ab-coral"><div class="arq-box-title">Contacto creado automáticamente</div><div class="arq-box-sub">Etiquetado · Segmentado · Pipeline asignado</div></div>
+            <div class="arq-box ab-coral"><div class="arq-box-title">Automatizaciones nativas</div><div class="arq-box-sub">Confirmación · Resultado · Fidelización</div></div>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:14px 16px;background:#E1F5EE;border-radius:10px;border:1px solid #1D9E75;">
+          <div style="font-size:12px;font-weight:700;color:#04342C;margin-bottom:6px;">Ventajas de la Opción A</div>
+          <div style="font-size:12px;color:#085041;line-height:1.8;">
+            · Sin integraciones ni Zapier — todo es nativo<br>
+            · Más rápida de montar — días, no semanas<br>
+            · Un solo proveedor y una sola factura<br>
+            · Ideal para arrancar y validar el sistema
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL: OPCIÓN B -->
+    <div class="arq-panel" id="tab-opcionB">
+      <div class="arq-diagram reveal">
+        <div style="margin-bottom:16px;">
+          <div class="opt-header opt-b-h">Opción B · GHL solo como CRM</div>
+          <p style="font-size:13px;color:var(--tierra);margin-top:8px;line-height:1.6;">Las herramientas de cara al espectador son mejores en diseño y UX. GHL recibe los datos vía Zapier o webhook y actúa como CRM central. Más flexible, algo más compleja de montar.</p>
+        </div>
+
+        <div class="arq-layer">
+          <div class="arq-layer-label">Entrada y captación</div>
+          <div class="arq-row">
+            <div class="arq-box ab-amber"><div class="arq-box-title">Entrada impresa</div><div class="arq-box-sub">QR con Beaconstac o QR.io</div></div>
+            <div style="display:flex;align-items:center;color:var(--tierra);opacity:0.4;padding:0 4px;">→</div>
+            <div class="arq-box ab-amber"><div class="arq-box-title">Carteles y zonas de paso</div><div class="arq-box-sub">QR dinámico con estadísticas de escaneo</div></div>
+          </div>
+        </div>
+        <div class="arq-arrow">↓</div>
+        <div class="arq-layer">
+          <div class="arq-layer-label">Landing y formulario — herramientas especializadas</div>
+          <div class="arq-row">
+            <div class="arq-box ab-purple"><div class="arq-box-title">Landing · Webflow o HTML</div><div class="arq-box-sub">Mayor control de diseño · Cartel · Reglas · RGPD</div></div>
+            <div style="display:flex;align-items:center;color:var(--tierra);opacity:0.4;padding:0 4px;">→</div>
+            <div class="arq-box ab-purple"><div class="arq-box-title">Formulario · Typeform</div><div class="arq-box-sub">Mejor UX móvil · Conversacional · Más tasa de completado</div></div>
+          </div>
+        </div>
+        <div class="arq-arrow">↓</div>
+        <div class="arq-layer">
+          <div class="arq-layer-label">Conexión a GHL vía Zapier o webhook</div>
+          <div class="arq-row">
+            <div class="arq-box ab-gray"><div class="arq-box-title">Zapier / Webhook</div><div class="arq-box-sub">Cada envío de Typeform crea el contacto en GHL automáticamente</div></div>
+          </div>
+        </div>
+        <div class="arq-arrow">↓</div>
+        <div class="arq-layer">
+          <div class="arq-layer-label">CRM y automatización — GoHighLevel</div>
+          <div class="arq-row">
+            <div class="arq-box ab-coral"><div class="arq-box-title">Contacto creado automáticamente</div><div class="arq-box-sub">Etiquetado · Segmentado · Pipeline asignado</div></div>
+            <div class="arq-box ab-coral"><div class="arq-box-title">Automatizaciones nativas GHL</div><div class="arq-box-sub">Confirmación · Resultado · Fidelización</div></div>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:14px 16px;background:#EEEDFE;border-radius:10px;border:1px solid #7F77DD;">
+          <div style="font-size:12px;font-weight:700;color:#26215C;margin-bottom:6px;">Ventajas de la Opción B</div>
+          <div style="font-size:12px;color:#3C3489;line-height:1.8;">
+            · Formulario Typeform: mejor experiencia en móvil y mayor tasa de completado<br>
+            · QR con estadísticas: sabes cuántos escaneos hay antes de que participen<br>
+            · Landing con más libertad de diseño e imagen de marca<br>
+            · Ideal cuando la experiencia del espectador es prioritaria
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 07 HOJA DE RUTA -->
 <section id="ruta" class="ruta-sec">
   <div class="container ruta-content">
     <p class="section-eyebrow reveal">Implementación</p>
@@ -1146,6 +1510,14 @@ footer {
 </footer>
 
 <script>
+// TABS ARQUITECTURA
+function showTab(id) {
+  document.querySelectorAll('.arq-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.arq-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
 // NAV MOBILE
 function toggleMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');
