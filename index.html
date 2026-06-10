@@ -324,6 +324,11 @@ footer{background:var(--negro);border-top:1px solid rgba(196,114,10,.2);padding:
 .footer-logo span{color:var(--alazan);font-style:normal;}
 .footer-text{font-size:11px;color:rgba(245,222,179,.3);}
 
+.fp-tech{margin-top:14px;padding:12px 14px;background:var(--negro);border-radius:8px;border-left:3px solid var(--alazan);}
+.fp-tech-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--alazan);margin-bottom:6px;}
+.fp-tech-body{font-size:12px;color:rgba(245,222,179,.6);line-height:1.7;}
+.fp-tech-body code{background:rgba(196,114,10,.2);color:var(--alazan2);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:11px;}
+
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
@@ -740,6 +745,7 @@ const pasos=[
     title:'La entrada con su <em>llave única</em>',
     body:'Bacantix genera cada entrada con dos elementos: el código QR que lleva a la página de la quiniela, y un código alfanumérico personal que identifica de forma única esa entrada. Nadie más puede usar ese código.',
     tags:['Generado por Bacantix','Único por entrada','Impreso en papel'],
+    tech:'Bacantix asigna un código alfanumérico a cada entrada en el momento de la venta — tanto online como en taquilla. El QR impreso apunta a una URL fija del tipo <code>quiniela.tuempresa.com/corrida/2609</code> que es la misma para toda la corrida. El código personal es lo que diferencia a cada espectador.',
     visual:'entrada'
   },
   {
@@ -748,6 +754,7 @@ const pasos=[
     title:'Escanea el QR, <em>entra a la quiniela</em>',
     body:'El espectador escanea el código QR de su entrada — o uno de los carteles a la entrada de la plaza. Llega a la página del festejo con toda la información: cartel, toreros y reglas de la quiniela.',
     tags:['En la entrada impresa','En carteles exteriores','En zonas de paso'],
+    tech:'La landing page es una página web sencilla, una por corrida. Puede estar alojada en cualquier servidor web o plataforma de páginas (Webflow, GHL, HTML simple en GitHub Pages). La URL lleva un parámetro de identificación del evento: <code>?evento=2609-sevilla</code> que el sistema usa para saber qué lista de códigos y qué preguntas mostrar.',
     visual:'qr'
   },
   {
@@ -756,38 +763,61 @@ const pasos=[
     title:'Introduce tu código, <em>el sistema comprueba</em>',
     body:'Antes de ver la quiniela, el espectador introduce el código de su entrada. El sistema consulta a Bacantix en tiempo real: ¿existe este código? ¿ya fue usado? Solo si las dos respuestas son correctas, accede.',
     tags:['Consulta en tiempo real','Cubre ventas en taquilla','Un uso por entrada'],
+    tech:'Al pulsar "Validar", la página lanza una llamada a la API de Bacantix (o a Google Sheets si se usa sincronización periódica). Bacantix responde: válido / inválido / ya usado. Si es válido, el código queda marcado como "en uso" para que nadie más pueda emplearlo. Todo ocurre en menos de 1 segundo.',
     visual:'validacion'
   },
   {
+    label:'El formulario',
+    eyebrow:'Paso 4 · Vinculación del código',
+    title:'El código viaja <em>con la quiniela</em>',
+    body:'Una vez validado, el código de entrada queda vinculado al formulario. Cuando el espectador envíe sus predicciones, ese código viajará junto a sus respuestas. Así cada participación queda asociada a una entrada física real.',
+    tags:['Código vinculado al envío','Trazabilidad completa','Sin duplicados posibles'],
+    tech:'El código validado se guarda en la sesión del navegador (sessionStorage) y se añade automáticamente como campo oculto en el formulario. Al enviarlo, la base de datos recibe: código de entrada + datos del espectador + predicciones + timestamp de envío. Ese timestamp es el desempate en caso de empate de puntuación.',
+    visual:'formulario'
+  },
+  {
     label:'La quiniela',
-    eyebrow:'Paso 4 · Antes del paseíllo',
+    eyebrow:'Paso 5 · Antes del paseíllo',
     title:'Rellena tus <em>predicciones</em>',
-    body:'El espectador completa sus datos y sus predicciones para la corrida. Todo diseñado para hacerse en menos de 2 minutos desde el móvil. La quiniela se cierra al inicio del paseíllo.',
+    body:'El espectador completa sus datos personales, su perfil taurino y sus predicciones para la corrida. Todo en menos de 2 minutos desde el móvil. La quiniela se cierra automáticamente al inicio del paseíllo.',
     tags:['Menos de 2 minutos','Optimizado para móvil','Cierre automático al inicio'],
+    tech:'El formulario puede construirse con Typeform, con el constructor nativo de GoHighLevel, o con HTML propio. Las respuestas se almacenan en Google Sheets (una hoja por corrida) o directamente en GoHighLevel si se usa ese sistema. Cada fila de la hoja contiene: código de entrada · nombre · email · teléfono · ciudad · año nacimiento · respuestas Q1–Q6 · respuesta estrella · timestamp.',
     visual:'quiniela'
   },
   {
+    label:'Almacenamiento',
+    eyebrow:'Paso 6 · La base de respuestas',
+    title:'Todas las predicciones, <em>organizadas y listas</em>',
+    body:'Cada envío queda registrado en una hoja de cálculo dedicada a esa corrida. El empresario puede ver en tiempo real cuántas personas han participado y cuáles son las predicciones más populares.',
+    tags:['Una hoja por corrida','Actualización en tiempo real','Exportable en cualquier momento'],
+    tech:'Google Sheets actúa como base de datos ligera. La estructura es simple: una columna por campo, una fila por participante. El código de entrada es la clave que une cada participación con una entrada física de Bacantix. Esta hoja es también el punto de partida para calcular el ganador una vez introducido el resultado real.',
+    visual:'almacenamiento'
+  },
+  {
     label:'Confirmación',
-    eyebrow:'Paso 5 · Enviado',
+    eyebrow:'Paso 7 · Enviado',
     title:'Quiniela enviada, <em>a esperar el resultado</em>',
-    body:'Tras enviar, el espectador recibe una confirmación en pantalla con sus predicciones guardadas y un mensaje indicando que el resultado se publicará al finalizar la corrida.',
-    tags:['Confirmación inmediata','Predicciones guardadas','Pendiente de resultado'],
+    body:'Tras enviar, el espectador recibe una confirmación en pantalla con sus predicciones guardadas. El resultado se publicará al finalizar la corrida.',
+    tags:['Confirmación inmediata en pantalla','Predicciones visibles','Pendiente de resultado'],
+    tech:'La confirmación es una pantalla de éxito en la misma página web — no requiere email ni infraestructura adicional. El espectador puede hacer captura de pantalla de sus predicciones. En una fase posterior, cuando se active la comunicación por email, este momento es el punto donde se lanzaría el mensaje de confirmación.',
     visual:'confirmacion'
   },
   {
     label:'Resultado',
-    eyebrow:'Paso 6 · Tras la corrida',
+    eyebrow:'Paso 8 · Tras la corrida',
     title:'El empresario introduce <em>el resultado real</em>',
-    body:'Al terminar la corrida, el empresario introduce en el panel lo que ocurrió: orejas cortadas, vueltas al ruedo, quién salió a hombros. El sistema compara automáticamente con todas las predicciones.',
-    tags:['Panel de administración','Tarda menos de 2 minutos','Dispara el cálculo automático'],
+    body:'Al terminar la corrida, el empresario accede al panel y registra lo que ocurrió: orejas cortadas, vueltas al ruedo, quién salió a hombros. El sistema compara automáticamente con todas las predicciones recibidas.',
+    tags:['Panel simple','Menos de 2 minutos','Activa el cálculo automático'],
+    tech:'El panel del empresario es un formulario interno (Google Form o formulario simple) que escribe en una fila fija de la hoja de resultados. Una vez introducido el resultado, una fórmula de Google Sheets compara cada respuesta de cada participante con el resultado real, calcula la puntuación de cada fila y marca automáticamente al ganador. No requiere ningún cálculo manual.',
     visual:'resultado'
   },
   {
     label:'El ganador',
-    eyebrow:'Paso 7 · El reconocimiento',
+    eyebrow:'Paso 9 · El reconocimiento',
     title:'El sistema encuentra <em>al ganador</em>',
-    body:'El sistema calcula la puntuación de cada participante y determina el ganador. En caso de empate, gana quien antes envió su quiniela. El ganador recibe su reconocimiento en pantalla.',
+    body:'El sistema calcula la puntuación de cada participante y determina el ganador. En caso de empate, gana quien antes envió su quiniela. El ganador recibe su reconocimiento en pantalla al consultar los resultados.',
     tags:['Cálculo automático','Desempate por timestamp','Reconocimiento personalizado'],
+    tech:'La fórmula COUNTIF de Sheets compara cada predicción con el resultado real y suma los puntos. La columna de puntuación máxima identifica al ganador. El timestamp registrado en el envío resuelve los empates sin intervención humana. La página de resultados de la corrida muestra públicamente el ganador con su nombre y puntuación.',
     visual:'ganador'
   }
 ];
@@ -812,6 +842,10 @@ function renderFlujo(){
         <h3 class="fp-title">${p.title}</h3>
         <p class="fp-body">${p.body}</p>
         <div class="fp-tags">${p.tags.map(t=>`<span class="fp-tag">${t}</span>`).join('')}</div>
+        <div class="fp-tech">
+          <div class="fp-tech-label">⚙ Cómo funciona por dentro</div>
+          <div class="fp-tech-body">${p.tech}</div>
+        </div>
         <div class="fp-nav">
           ${i>0?`<button class="fp-btn fp-btn-prev" onclick="goStep(${i-1})">← ${pasos[i-1].label}</button>`:''}
           ${i<pasos.length-1?`<button class="fp-btn fp-btn-next" onclick="goStep(${i+1})">${pasos[i+1].label} →</button>`:''}
@@ -833,7 +867,7 @@ function getVisual(type){
   switch(type){
     case 'entrada': return `
       <div style="padding:20px;">
-        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:12px;">Ejemplo de entrada</div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:12px;">Ejemplo de entrada generada por Bacantix</div>
         <div class="mockup-entrada">
           <div class="me-evento">Empresa Taurina · Sevilla</div>
           <div class="me-titulo">Gran Corrida de la Feria</div>
@@ -847,7 +881,7 @@ function getVisual(type){
           <div class="me-codigos">
             <div class="me-qr">QR<br>QUINIELA</div>
             <div class="me-cod-info">
-              <div class="me-cod-label">Tu código de entrada</div>
+              <div class="me-cod-label">Tu código personal de entrada</div>
               <div class="me-cod-val">TOR-2609-A4F7</div>
               <div class="me-cod-hint">Introdúcelo para participar en la quiniela</div>
             </div>
@@ -857,15 +891,16 @@ function getVisual(type){
     case 'qr': return `
       <img src="img3.png" alt="Entrada con QR" style="height:200px;">
       <div class="fp-visual-body">
-        <div style="font-size:13px;color:var(--tierra);line-height:1.6;">El QR lleva a la página del festejo. Al escanearlo el espectador ve el cartel de la corrida y el botón para participar en la quiniela.</div>
+        <div style="font-size:12px;color:var(--tierra);line-height:1.7;">El QR lleva siempre a la misma URL de la corrida. Al escanearlo el espectador ve el cartel, los toreros y el botón de participar. La URL identifica el evento automáticamente.</div>
+        <div style="margin-top:10px;padding:8px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:6px;font-size:11px;font-family:monospace;color:var(--caoba);">quiniela.tuempresa.com/corrida/2609-sevilla</div>
       </div>`;
     case 'validacion': return `
       <div class="fp-visual-body">
-        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:12px;">Prueba los tres casos</div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;">
-          <div style="padding:8px 12px;background:#E1F5EE;border-radius:6px;border:1px solid #1D9E75;font-size:12px;color:#04342C;cursor:pointer;" onclick="document.getElementById('codInput2').value='TOR-2609-A4F7';validarCodigo2()"><strong>TOR-2609-A4F7</strong> — Entrada válida, no usada</div>
-          <div style="padding:8px 12px;background:#FAEEDA;border-radius:6px;border:1px solid #BA7517;font-size:12px;color:#412402;cursor:pointer;" onclick="document.getElementById('codInput2').value='TOR-2609-B8K2';validarCodigo2()"><strong>TOR-2609-B8K2</strong> — Entrada válida, ya usada</div>
-          <div style="padding:8px 12px;background:#FAECE7;border-radius:6px;border:1px solid #D85A30;font-size:12px;color:#4A1B0C;cursor:pointer;" onclick="document.getElementById('codInput2').value='TOR-2609-XXXX';validarCodigo2()"><strong>TOR-2609-XXXX</strong> — Código inexistente</div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:10px;">Prueba los tres casos</div>
+        <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:12px;">
+          <div style="padding:8px 12px;background:#E1F5EE;border-radius:6px;border:1px solid #1D9E75;font-size:12px;color:#04342C;cursor:pointer;" onclick="document.getElementById('codInput2').value='TOR-2609-A4F7';validarCodigo2()"><strong>TOR-2609-A4F7</strong> — Válido, no usado → toca para probarlo</div>
+          <div style="padding:8px 12px;background:#FAEEDA;border-radius:6px;border:1px solid #BA7517;font-size:12px;color:#412402;cursor:pointer;" onclick="document.getElementById('codInput2').value='TOR-2609-B8K2';validarCodigo2()"><strong>TOR-2609-B8K2</strong> — Válido, ya usado → toca para probarlo</div>
+          <div style="padding:8px 12px;background:#FAECE7;border-radius:6px;border:1px solid #D85A30;font-size:12px;color:#4A1B0C;cursor:pointer;" onclick="document.getElementById('codInput2').value='TOR-2609-XXXX';validarCodigo2()"><strong>TOR-2609-XXXX</strong> — No existe → toca para probarlo</div>
         </div>
         <div style="display:flex;gap:8px;">
           <input id="codInput2" class="q-input" style="letter-spacing:.1em;font-weight:600;font-size:13px;" placeholder="O escribe uno tú mismo">
@@ -873,24 +908,95 @@ function getVisual(type){
         </div>
         <div id="codResult2" class="demo-cod-result" style="margin-top:10px;"></div>
       </div>`;
+    case 'formulario': return `
+      <div class="fp-visual-body">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:12px;">Cómo viaja el código con el formulario</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="padding:10px 12px;background:#E1F5EE;border:1px solid #1D9E75;border-radius:8px;">
+            <div style="font-size:11px;font-weight:700;color:#04342C;margin-bottom:3px;">✓ Código validado y guardado</div>
+            <div style="font-size:12px;color:#085041;font-family:monospace;">código = TOR-2609-A4F7</div>
+          </div>
+          <div style="text-align:center;color:var(--tierra);font-size:12px;">↓ se añade automáticamente al formulario como campo oculto</div>
+          <div style="padding:10px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:8px;font-size:12px;color:var(--tierra);">
+            <div style="margin-bottom:6px;"><strong style="color:var(--negro);">Campos visibles:</strong> nombre, email, teléfono, ciudad, año de nacimiento, perfil, predicciones</div>
+            <div><strong style="color:var(--negro);">Campo oculto:</strong> <span style="font-family:monospace;color:var(--caoba);">codigo_entrada = TOR-2609-A4F7</span></div>
+          </div>
+          <div style="text-align:center;color:var(--tierra);font-size:12px;">↓ al enviar</div>
+          <div style="padding:10px 12px;background:#FAEEDA;border:1px solid #BA7517;border-radius:8px;font-size:12px;color:#412402;">
+            <div style="font-weight:700;margin-bottom:4px;">Registro guardado en la base de datos</div>
+            <div style="font-family:monospace;font-size:11px;line-height:1.8;color:#7A3B00;">TOR-2609-A4F7 | Carmen Álvarez | carmen@email.com | ...<br>predicciones: Q1=2orejas, Q2=sí, ... | timestamp: 17:43:22</div>
+          </div>
+        </div>
+      </div>`;
     case 'quiniela': return `
       <div class="fp-visual-body">
-        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:12px;">Vista previa del formulario</div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="padding:10px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:8px;font-size:12px;color:var(--tierra);">Bloque <strong style="color:var(--negro);">Tus datos</strong> — Nombre, email, teléfono, ciudad, año de nacimiento</div>
-          <div style="padding:10px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:8px;font-size:12px;color:var(--tierra);">Bloque <strong style="color:var(--negro);">Perfil taurino</strong> — Abonado, frecuencia, torero favorito</div>
-          <div style="padding:10px 12px;background:#FAEEDA;border:1px solid #BA7517;border-radius:8px;font-size:12px;color:var(--caoba);">Bloque <strong>La quiniela</strong> — 6 preguntas (1 pt cada una) + pregunta estrella (3 pts) = 9 pts máximo</div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:12px;">Estructura del formulario</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="padding:10px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:8px;font-size:12px;color:var(--tierra);">Bloque <strong style="color:var(--negro);">Tus datos</strong><br>Nombre · Email · Teléfono · Ciudad · Año de nacimiento</div>
+          <div style="padding:10px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:8px;font-size:12px;color:var(--tierra);">Bloque <strong style="color:var(--negro);">Perfil taurino</strong><br>¿Abonado? · Frecuencia de asistencia · Torero favorito</div>
+          <div style="padding:10px 12px;background:#FAEEDA;border:1px solid #BA7517;border-radius:8px;font-size:12px;color:var(--caoba);">Bloque <strong>La quiniela</strong><br>6 preguntas × 1 pt + pregunta estrella × 3 pts = <strong>9 pts máximo</strong></div>
+          <div style="padding:8px 12px;background:var(--negro);border-radius:8px;font-size:12px;color:rgba(245,222,179,.6);">⏱ Tiempo estimado: <strong style="color:var(--alazan2);">menos de 2 minutos</strong> · Optimizado para móvil</div>
+          <div style="padding:8px 12px;background:#E1F5EE;border:1px solid #1D9E75;border-radius:8px;font-size:11px;color:#04342C;">🔒 La quiniela se cierra automáticamente al inicio del festejo. Ningún envío posterior es aceptado.</div>
         </div>
-        <div style="margin-top:12px;padding:10px 12px;background:var(--negro);border-radius:8px;font-size:12px;color:rgba(245,222,179,.6);">⏱ Tiempo estimado de relleno: <strong style="color:var(--alazan2);">menos de 2 minutos</strong></div>
+      </div>`;
+    case 'almacenamiento': return `
+      <div class="fp-visual-body">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:12px;">Estructura de la base de respuestas</div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;font-size:11px;">
+            <thead>
+              <tr style="background:var(--negro);color:var(--arena);">
+                <th style="padding:7px 8px;text-align:left;white-space:nowrap;">Código</th>
+                <th style="padding:7px 8px;text-align:left;white-space:nowrap;">Nombre</th>
+                <th style="padding:7px 8px;text-align:left;white-space:nowrap;">Q1</th>
+                <th style="padding:7px 8px;text-align:left;white-space:nowrap;">Q2</th>
+                <th style="padding:7px 8px;text-align:left;white-space:nowrap;">★</th>
+                <th style="padding:7px 8px;text-align:left;white-space:nowrap;">Pts</th>
+                <th style="padding:7px 8px;text-align:left;white-space:nowrap;">Hora</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:#E1F5EE;border-bottom:1px solid #1D9E75;">
+                <td style="padding:6px 8px;font-family:monospace;color:#04342C;font-weight:700;">A4F7</td>
+                <td style="padding:6px 8px;color:#04342C;">Carmen A.</td>
+                <td style="padding:6px 8px;color:#04342C;">2 orejas</td>
+                <td style="padding:6px 8px;color:#04342C;">Sí</td>
+                <td style="padding:6px 8px;color:#04342C;">Roca·2</td>
+                <td style="padding:6px 8px;font-weight:700;color:#04342C;">7</td>
+                <td style="padding:6px 8px;color:#04342C;">17:43</td>
+              </tr>
+              <tr style="background:var(--albero);border-bottom:1px solid var(--polvo);">
+                <td style="padding:6px 8px;font-family:monospace;color:var(--tierra);">C3M9</td>
+                <td style="padding:6px 8px;color:var(--tierra);">Manuel R.</td>
+                <td style="padding:6px 8px;color:var(--tierra);">3 o más</td>
+                <td style="padding:6px 8px;color:var(--tierra);">No</td>
+                <td style="padding:6px 8px;color:var(--tierra);">Morante·1</td>
+                <td style="padding:6px 8px;font-weight:700;color:var(--tierra);">3</td>
+                <td style="padding:6px 8px;color:var(--tierra);">17:51</td>
+              </tr>
+              <tr style="background:var(--albero);">
+                <td style="padding:6px 8px;font-family:monospace;color:var(--tierra);">D7P1</td>
+                <td style="padding:6px 8px;color:var(--tierra);">Lucía M.</td>
+                <td style="padding:6px 8px;color:var(--tierra);">2 orejas</td>
+                <td style="padding:6px 8px;color:var(--tierra);">Sí</td>
+                <td style="padding:6px 8px;color:var(--tierra);">Roca·2</td>
+                <td style="padding:6px 8px;font-weight:700;color:var(--tierra);">7</td>
+                <td style="padding:6px 8px;color:var(--tierra);">17:58</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:10px;padding:8px 12px;background:#FAEEDA;border:1px solid #BA7517;border-radius:6px;font-size:11px;color:#7A3B00;">Nota: Carmen y Lucía tienen la misma puntuación. El desempate es por hora de envío — Carmen gana por haber enviado antes.</div>
+        <div style="margin-top:8px;padding:8px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:6px;font-size:11px;color:var(--tierra);">La columna "Pts" se calcula automáticamente con una fórmula en Google Sheets una vez introducido el resultado real.</div>
       </div>`;
     case 'confirmacion': return `
       <div class="fp-visual-body">
-        <div style="text-align:center;padding:16px 0;">
-          <div style="font-size:36px;margin-bottom:10px;">✓</div>
-          <div style="font-family:var(--ff-display);font-size:18px;font-weight:700;color:var(--negro);margin-bottom:6px;">¡Quiniela enviada!</div>
-          <div style="font-size:13px;color:var(--tierra);margin-bottom:16px;line-height:1.6;">Tus predicciones han quedado guardadas.<br>El resultado se publicará al finalizar la corrida.</div>
+        <div style="text-align:center;padding:14px 0;">
+          <div style="font-size:34px;margin-bottom:8px;">✓</div>
+          <div style="font-family:var(--ff-display);font-size:17px;font-weight:700;color:var(--negro);margin-bottom:5px;">¡Quiniela enviada!</div>
+          <div style="font-size:12px;color:var(--tierra);margin-bottom:14px;line-height:1.6;">Tus predicciones han quedado guardadas.<br>El resultado se publicará al finalizar la corrida.</div>
           <div style="background:var(--albero);border-radius:8px;padding:12px;border:1px solid var(--polvo);text-align:left;">
-            <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:8px;">Tus predicciones</div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:7px;">Tus predicciones</div>
             <div style="font-size:12px;color:var(--negro);line-height:1.9;">
               Orejas totales: <strong>2 orejas</strong><br>
               Vuelta al ruedo: <strong>Sí</strong><br>
@@ -905,17 +1011,27 @@ function getVisual(type){
       </div>`;
     case 'resultado': return `
       <div class="fp-visual-body">
-        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:12px;">Comparativa de resultados</div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:10px;">Panel del empresario — introducir resultado</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
+          <div style="padding:8px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:6px;font-size:12px;display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--tierra);">Orejas totales</span><strong style="color:var(--negro);">2 orejas</strong></div>
+          <div style="padding:8px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:6px;font-size:12px;display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--tierra);">Vuelta al ruedo</span><strong style="color:var(--negro);">Sí</strong></div>
+          <div style="padding:8px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:6px;font-size:12px;display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--tierra);">Puerta grande</span><strong style="color:var(--negro);">No</strong></div>
+          <div style="padding:8px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:6px;font-size:12px;display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--tierra);">Más orejas</span><strong style="color:var(--negro);">Roca Rey</strong></div>
+          <div style="padding:8px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:6px;font-size:12px;display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--tierra);">Aviso a torero</span><strong style="color:var(--negro);">No</strong></div>
+          <div style="padding:8px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:6px;font-size:12px;display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--tierra);">Aguado oreja</span><strong style="color:var(--negro);">No</strong></div>
+          <div style="padding:8px 12px;background:#FAEEDA;border:1px solid #BA7517;border-radius:6px;font-size:12px;display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--caoba);">★ Triunfador</span><strong style="color:var(--negro);">Roca Rey · 2 orejas</strong></div>
+        </div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:8px;">Comparativa automática — ejemplo participante</div>
         <table class="resultado-table">
-          <thead><tr><th>Pregunta</th><th>Resultado real</th><th>Tu predicción</th><th></th></tr></thead>
+          <thead><tr><th>Pregunta</th><th>Real</th><th>Predicción</th><th></th></tr></thead>
           <tbody>
-            <tr><td class="td-q">Orejas totales</td><td class="td-real">2 orejas</td><td class="td-pred">2 orejas</td><td class="td-ok">✓ +1</td></tr>
-            <tr><td class="td-q">Vuelta al ruedo</td><td class="td-real">Sí</td><td class="td-pred">Sí</td><td class="td-ok">✓ +1</td></tr>
+            <tr><td class="td-q">Orejas</td><td class="td-real">2 orejas</td><td class="td-pred">2 orejas</td><td class="td-ok">✓ +1</td></tr>
+            <tr><td class="td-q">Vuelta</td><td class="td-real">Sí</td><td class="td-pred">Sí</td><td class="td-ok">✓ +1</td></tr>
             <tr><td class="td-q">Puerta grande</td><td class="td-real">No</td><td class="td-pred">Sí, uno</td><td class="td-no">✗</td></tr>
             <tr><td class="td-q">Más orejas</td><td class="td-real">Roca Rey</td><td class="td-pred">Roca Rey</td><td class="td-ok">✓ +1</td></tr>
-            <tr><td class="td-q">Aviso torero</td><td class="td-real">No</td><td class="td-pred">No</td><td class="td-ok">✓ +1</td></tr>
-            <tr><td class="td-q">Aguado oreja</td><td class="td-real">No</td><td class="td-pred">Sí, una</td><td class="td-no">✗</td></tr>
-            <tr><td class="td-q">★ Estrella</td><td class="td-real">Roca Rey · 2</td><td class="td-pred">Roca Rey · 2</td><td class="td-ok">✓ +3</td></tr>
+            <tr><td class="td-q">Aviso</td><td class="td-real">No</td><td class="td-pred">No</td><td class="td-ok">✓ +1</td></tr>
+            <tr><td class="td-q">Aguado</td><td class="td-real">No</td><td class="td-pred">Sí, una</td><td class="td-no">✗</td></tr>
+            <tr><td class="td-q">★ Estrella</td><td class="td-real">Roca·2</td><td class="td-pred">Roca·2</td><td class="td-ok">✓ +3</td></tr>
           </tbody>
         </table>
         <div class="score-final"><span class="sf-label">Puntuación total</span><span class="sf-val">7 / 9 pts</span></div>
@@ -926,12 +1042,12 @@ function getVisual(type){
           <div class="gs-trophy">🏆</div>
           <div class="gs-titulo">¡Ganador de la quiniela!</div>
           <div class="gs-nombre">Carmen Álvarez Ruiz</div>
-          <div class="gs-puntos">7 de 9 puntos · Primera en enviar con esta puntuación</div>
+          <div class="gs-puntos">7 de 9 puntos · Primera en enviar con esta puntuación · 17:43h</div>
           <div class="gs-premio">
             <div class="gs-premio-label">Premio obtenido</div>
             <div class="gs-premio-val">Entrada VIP para la próxima corrida</div>
           </div>
-          <div class="gs-msg">Enhorabuena por tu intuición taurina.<br>El premio se recogerá en taquilla con tu DNI.</div>
+          <div class="gs-msg">Enhorabuena por tu intuición taurina.<br>El premio se recogerá en taquilla presentando tu DNI.</div>
         </div>
       </div>`;
     default: return '<div class="fp-visual-body"></div>';
