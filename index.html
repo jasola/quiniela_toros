@@ -8,728 +8,343 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   TOKENS & RESET
-   ============================================================ */
 :root {
-  --negro:    #1A0F00;
-  --caoba:    #7A3B00;
-  --alazan:   #C4720A;
-  --alazan2:  #E8920A;
-  --arena:    #F5DEB3;
-  --albero:   #FAF7F2;
-  --polvo:    #E8E0D4;
-  --tierra:   #6B5B47;
-  --verde:    #2D7A5F;
-  --verdeL:   #E8F5F0;
-  --blanco:   #FFFFFF;
-
+  --negro:   #1A0F00;
+  --caoba:   #7A3B00;
+  --alazan:  #C4720A;
+  --alazan2: #E8920A;
+  --arena:   #F5DEB3;
+  --albero:  #FAF7F2;
+  --polvo:   #E8E0D4;
+  --tierra:  #6B5B47;
+  --verde:   #2D7A5F;
+  --blanco:  #FFFFFF;
   --ff-display: 'Playfair Display', Georgia, serif;
   --ff-body:    'Outfit', sans-serif;
-
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-
+  --radius-sm: 6px; --radius-md: 12px; --radius-lg: 20px;
   --shadow: 0 4px 32px rgba(26,15,0,0.12);
   --shadow-lg: 0 12px 60px rgba(26,15,0,0.22);
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff-body);background:var(--albero);color:var(--negro);line-height:1.6;overflow-x:hidden;}
+img{display:block;width:100%;object-fit:cover;}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(26,15,0,0.93);backdrop-filter:blur(12px);border-bottom:1px solid rgba(196,114,10,0.3);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:var(--ff-display);font-size:15px;font-style:italic;color:var(--arena);}
+.nav-logo span{color:var(--alazan);font-style:normal;}
+.nav-links{display:flex;gap:4px;list-style:none;}
+.nav-links a{font-size:10px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:rgba(245,222,179,0.6);text-decoration:none;padding:5px 9px;border-radius:4px;transition:color .2s,background .2s;}
+.nav-links a:hover{color:var(--arena);background:rgba(196,114,10,0.2);}
+.nav-hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;}
+.nav-hamburger span{width:22px;height:2px;background:var(--arena);border-radius:2px;}
+.mobile-menu{display:none;position:fixed;top:56px;left:0;right:0;z-index:99;background:rgba(26,15,0,0.97);padding:16px 24px 24px;flex-direction:column;gap:4px;border-bottom:1px solid rgba(196,114,10,0.3);}
+.mobile-menu a{font-size:13px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:rgba(245,222,179,.75);text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(245,222,179,.08);transition:color .2s;}
+.mobile-menu.open{display:flex;}
 
-body {
-  font-family: var(--ff-body);
-  background: var(--albero);
-  color: var(--negro);
-  line-height: 1.6;
-  overflow-x: hidden;
-}
+/* COMMON */
+section{scroll-margin-top:56px;}
+.container{max-width:1100px;margin:0 auto;padding:0 24px;}
+.section-eyebrow{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--alazan);margin-bottom:12px;}
+.section-title{font-family:var(--ff-display);font-size:clamp(26px,4vw,42px);font-weight:700;line-height:1.2;color:var(--negro);margin-bottom:14px;}
+.section-title em{font-style:italic;color:var(--caoba);}
+.section-lead{font-size:16px;font-weight:300;color:var(--tierra);max-width:620px;line-height:1.8;margin-bottom:44px;}
 
-img { display: block; width: 100%; object-fit: cover; }
+/* HERO */
+.hero{position:relative;height:100vh;min-height:580px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-image:url('img1.png');background-size:cover;background-position:center 30%;animation:heroZoom 12s ease-out forwards;}
+@keyframes heroZoom{from{transform:scale(1.05)}to{transform:scale(1)}}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,15,0,.3) 0%,rgba(26,15,0,.55) 50%,rgba(26,15,0,.88) 100%);}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:760px;animation:heroFade 1.2s ease-out .3s both;}
+@keyframes heroFade{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-eyebrow{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--alazan);border:1px solid rgba(196,114,10,.5);padding:5px 16px;border-radius:20px;margin-bottom:22px;background:rgba(196,114,10,.1);}
+.hero-title{font-family:var(--ff-display);font-size:clamp(34px,7vw,70px);font-weight:700;line-height:1.1;color:var(--arena);margin-bottom:14px;text-shadow:0 2px 24px rgba(26,15,0,.5);}
+.hero-title em{font-style:italic;color:var(--alazan2);display:block;}
+.hero-sub{font-size:clamp(14px,2.5vw,17px);color:rgba(245,222,179,.75);font-weight:300;max-width:520px;margin:0 auto 32px;line-height:1.7;}
+.hero-cta{display:inline-flex;align-items:center;gap:8px;background:var(--alazan);color:#fff;font-size:14px;font-weight:600;letter-spacing:.04em;text-decoration:none;padding:13px 30px;border-radius:var(--radius-sm);transition:background .2s,transform .2s;box-shadow:0 4px 20px rgba(196,114,10,.4);}
+.hero-cta:hover{background:var(--caoba);transform:translateY(-2px);}
+.hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;animation:bounce 2s ease-in-out infinite;}
+.hero-scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,rgba(245,222,179,.4),transparent);}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
 
-/* ============================================================
-   NAV
-   ============================================================ */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(26,15,0,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(196,114,10,0.3);
-  padding: 0 24px;
-  height: 56px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.nav-logo {
-  font-family: var(--ff-display);
-  font-size: 16px; font-style: italic;
-  color: var(--arena);
-  letter-spacing: 0.02em;
-}
-.nav-logo span { color: var(--alazan); font-style: normal; }
-.nav-links {
-  display: flex; gap: 6px; list-style: none;
-}
-.nav-links a {
-  font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
-  text-transform: uppercase; color: rgba(245,222,179,0.65);
-  text-decoration: none; padding: 6px 10px; border-radius: var(--radius-sm);
-  transition: color 0.2s, background 0.2s;
-}
-.nav-links a:hover { color: var(--arena); background: rgba(196,114,10,0.2); }
-.nav-hamburger {
-  display: none; flex-direction: column; gap: 4px;
-  cursor: pointer; padding: 4px;
-}
-.nav-hamburger span {
-  width: 22px; height: 2px; background: var(--arena); border-radius: 2px;
-  transition: all 0.3s;
-}
-.mobile-menu {
-  display: none; position: fixed; top: 56px; left: 0; right: 0; z-index: 99;
-  background: rgba(26,15,0,0.97); padding: 16px 24px 24px;
-  flex-direction: column; gap: 4px;
-  border-bottom: 1px solid rgba(196,114,10,0.3);
-}
-.mobile-menu a {
-  font-size: 13px; font-weight: 500; letter-spacing: 0.05em;
-  text-transform: uppercase; color: rgba(245,222,179,0.75);
-  text-decoration: none; padding: 10px 0;
-  border-bottom: 1px solid rgba(245,222,179,0.08);
-  transition: color 0.2s;
-}
-.mobile-menu a:hover { color: var(--alazan); }
-.mobile-menu.open { display: flex; }
+/* OPORTUNIDAD */
+.oportunidad{padding:96px 0;background:var(--albero);}
+.op-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+.op-img-wrap{position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:4/3;}
+.op-img-wrap img{height:100%;}
+.op-img-badge{position:absolute;bottom:20px;left:20px;background:rgba(26,15,0,.88);backdrop-filter:blur(8px);border:1px solid rgba(196,114,10,.4);border-radius:var(--radius-md);padding:12px 16px;color:var(--arena);font-size:13px;}
+.op-img-badge strong{display:block;font-size:21px;color:var(--alazan2);font-family:var(--ff-display);}
+.op-cards{display:flex;flex-direction:column;gap:14px;}
+.op-card{background:var(--blanco);border-radius:var(--radius-md);padding:18px 20px;border:1px solid var(--polvo);display:flex;gap:14px;align-items:flex-start;box-shadow:0 2px 12px rgba(26,15,0,.05);transition:transform .2s,box-shadow .2s;}
+.op-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+.op-icon{width:34px;height:34px;border-radius:50%;flex-shrink:0;border:1.5px solid var(--alazan);display:flex;align-items:center;justify-content:center;font-family:var(--ff-display);font-size:13px;font-weight:600;color:var(--alazan);font-style:italic;margin-top:2px;}
+.op-card-title{font-size:14px;font-weight:600;color:var(--negro);margin-bottom:3px;}
+.op-card-text{font-size:13px;color:var(--tierra);line-height:1.6;}
 
-/* ============================================================
-   HERO
-   ============================================================ */
-.hero {
-  position: relative; height: 100vh; min-height: 600px;
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-}
-.hero-bg {
-  position: absolute; inset: 0;
-  background-image: url('img1.png');
-  background-size: cover; background-position: center 30%;
-  transform: scale(1.05);
-  animation: heroZoom 12s ease-out forwards;
-}
-@keyframes heroZoom {
-  from { transform: scale(1.05); }
-  to   { transform: scale(1.0); }
-}
-.hero-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(26,15,0,0.35) 0%,
-    rgba(26,15,0,0.55) 50%,
-    rgba(26,15,0,0.85) 100%
-  );
-}
-.hero-content {
-  position: relative; z-index: 2;
-  text-align: center; padding: 0 24px;
-  max-width: 760px;
-  animation: heroFade 1.2s ease-out 0.3s both;
-}
-@keyframes heroFade {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.hero-eyebrow {
-  display: inline-block;
-  font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--alazan);
-  border: 1px solid rgba(196,114,10,0.5);
-  padding: 5px 16px; border-radius: 20px;
-  margin-bottom: 24px;
-  background: rgba(196,114,10,0.1);
-}
-.hero-title {
-  font-family: var(--ff-display);
-  font-size: clamp(36px, 7vw, 72px);
-  font-weight: 700; line-height: 1.1;
-  color: var(--arena);
-  margin-bottom: 16px;
-  text-shadow: 0 2px 24px rgba(26,15,0,0.5);
-}
-.hero-title em {
-  font-style: italic; color: var(--alazan2);
-  display: block;
-}
-.hero-sub {
-  font-size: clamp(15px, 2.5vw, 18px);
-  color: rgba(245,222,179,0.75);
-  font-weight: 300;
-  max-width: 520px; margin: 0 auto 36px;
-  line-height: 1.7;
-}
-.hero-cta {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--alazan); color: #fff;
-  font-size: 14px; font-weight: 600; letter-spacing: 0.04em;
-  text-decoration: none; padding: 14px 32px;
-  border-radius: var(--radius-sm);
-  transition: background 0.2s, transform 0.2s;
-  box-shadow: 0 4px 20px rgba(196,114,10,0.4);
-}
-.hero-cta:hover { background: var(--caoba); transform: translateY(-2px); }
-.hero-scroll {
-  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
-  z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px;
-  color: rgba(245,222,179,0.4); font-size: 10px; letter-spacing: 0.1em;
-  text-transform: uppercase;
-  animation: bounce 2s ease-in-out infinite;
-}
-.hero-scroll-line {
-  width: 1px; height: 40px;
-  background: linear-gradient(to bottom, rgba(245,222,179,0.4), transparent);
-}
-@keyframes bounce {
-  0%,100% { transform: translateX(-50%) translateY(0); }
-  50%      { transform: translateX(-50%) translateY(6px); }
-}
+/* COMO FUNCIONA */
+.como{padding:96px 0;background:var(--negro);position:relative;overflow:hidden;}
+.como::before{content:'';position:absolute;inset:0;background-image:url('img6.png');background-size:cover;opacity:.06;}
+.como .section-title{color:var(--arena);}
+.como .section-lead{color:rgba(245,222,179,.6);}
+.como .section-eyebrow{color:var(--alazan2);}
+.como-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;position:relative;z-index:1;}
+.como-img{border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 8px 48px rgba(0,0,0,.5);aspect-ratio:3/2;}
+.como-img img{height:100%;}
+.como-steps{display:flex;flex-direction:column;}
+.como-step{display:flex;gap:18px;padding:18px 0;border-bottom:1px solid rgba(245,222,179,.08);}
+.como-step:last-child{border-bottom:none;}
+.step-num-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.step-num{width:34px;height:34px;border-radius:50%;background:var(--alazan);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.step-line{width:1px;flex:1;min-height:16px;background:linear-gradient(to bottom,rgba(196,114,10,.4),transparent);margin-top:4px;}
+.como-step:last-child .step-line{display:none;}
+.step-body{padding-top:5px;}
+.step-title{font-size:14px;font-weight:600;color:var(--arena);margin-bottom:3px;}
+.step-text{font-size:12px;color:rgba(245,222,179,.55);line-height:1.6;}
+.step-tag{display:inline-block;margin-top:5px;font-size:10px;font-weight:600;letter-spacing:.05em;padding:2px 8px;border-radius:10px;background:rgba(196,114,10,.2);color:var(--alazan2);border:1px solid rgba(196,114,10,.3);}
 
-/* ============================================================
-   SECTIONS COMMON
-   ============================================================ */
-section { scroll-margin-top: 56px; }
+/* VALIDACION BACANTIX */
+.valid-sec{padding:96px 0;background:var(--albero);}
+.valid-intro{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-bottom:56px;}
+.valid-img{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:3/2;}
+.valid-img img{height:100%;}
 
-.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+/* flujo validacion visual */
+.valid-flow{display:flex;align-items:stretch;gap:0;margin-bottom:40px;flex-wrap:wrap;}
+.vf-step{flex:1;min-width:140px;display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 12px;background:var(--blanco);border:1px solid var(--polvo);position:relative;}
+.vf-step:first-child{border-radius:var(--radius-md) 0 0 var(--radius-md);}
+.vf-step:last-child{border-radius:0 var(--radius-md) var(--radius-md) 0;}
+.vf-step+.vf-step{border-left:none;}
+.vf-num{width:32px;height:32px;border-radius:50%;background:var(--alazan);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0;}
+.vf-title{font-size:12px;font-weight:600;color:var(--negro);margin-bottom:4px;line-height:1.3;}
+.vf-text{font-size:11px;color:var(--tierra);line-height:1.4;}
+.vf-arrow{position:absolute;right:-14px;top:50%;transform:translateY(-50%);z-index:2;width:28px;height:28px;background:var(--alazan);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;}
+.vf-step:last-child .vf-arrow{display:none;}
+.vf-ok{background:#E1F5EE;border-color:#1D9E75;}
+.vf-ok .vf-num{background:#1D9E75;}
+.vf-ok .vf-title{color:#04342C;}
+.vf-ok .vf-text{color:#0F6E56;}
+.vf-no{background:#FAECE7;border-color:#D85A30;}
+.vf-no .vf-num{background:#D85A30;}
+.vf-no .vf-title{color:#4A1B0C;}
+.vf-no .vf-text{color:#993C1D;}
 
-.section-eyebrow {
-  font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
-  text-transform: uppercase; color: var(--alazan);
-  margin-bottom: 12px;
-}
-.section-title {
-  font-family: var(--ff-display);
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 700; line-height: 1.2;
-  color: var(--negro);
-  margin-bottom: 16px;
-}
-.section-title em { font-style: italic; color: var(--caoba); }
-.section-lead {
-  font-size: 17px; font-weight: 300; color: var(--tierra);
-  max-width: 620px; line-height: 1.8;
-  margin-bottom: 48px;
-}
+/* demo codigo */
+.demo-codigo{background:var(--blanco);border-radius:var(--radius-lg);border:1px solid var(--polvo);overflow:hidden;box-shadow:var(--shadow);max-width:480px;margin:0 auto;}
+.demo-cod-header{background:var(--negro);padding:16px 20px;}
+.demo-cod-title{font-family:var(--ff-display);font-size:16px;color:var(--arena);font-weight:600;}
+.demo-cod-sub{font-size:11px;color:var(--alazan);margin-top:3px;}
+.demo-cod-body{padding:24px;}
+.demo-cod-label{font-size:11px;font-weight:600;color:var(--tierra);margin-bottom:6px;}
+.demo-cod-input-wrap{display:flex;gap:8px;}
+.demo-cod-input{flex:1;padding:10px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--polvo);background:var(--albero);font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--negro);font-family:var(--ff-body);outline:none;transition:border-color .2s;}
+.demo-cod-input:focus{border-color:var(--alazan);}
+.demo-cod-btn{background:var(--alazan);color:#fff;border:none;border-radius:var(--radius-sm);padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--ff-body);transition:background .2s;}
+.demo-cod-btn:hover{background:var(--caoba);}
+.demo-cod-result{margin-top:14px;padding:12px 14px;border-radius:var(--radius-sm);font-size:13px;display:none;line-height:1.5;}
+.result-ok{background:#E1F5EE;border:1px solid #1D9E75;color:#04342C;}
+.result-used{background:#FAEEDA;border:1px solid #BA7517;color:#412402;}
+.result-no{background:#FAECE7;border:1px solid #D85A30;color:#4A1B0C;}
+.demo-cod-hint{font-size:11px;color:var(--tierra);margin-top:10px;opacity:.7;}
 
-/* ============================================================
-   02 OPORTUNIDAD
-   ============================================================ */
-.oportunidad {
-  padding: 100px 0;
-  background: var(--albero);
-}
-.op-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px; align-items: center;
-}
-.op-img-wrap {
-  position: relative; border-radius: var(--radius-lg); overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  aspect-ratio: 4/3;
-}
-.op-img-wrap img { height: 100%; }
-.op-img-badge {
-  position: absolute; bottom: 20px; left: 20px;
-  background: rgba(26,15,0,0.88); backdrop-filter: blur(8px);
-  border: 1px solid rgba(196,114,10,0.4);
-  border-radius: var(--radius-md); padding: 12px 16px;
-  color: var(--arena); font-size: 13px;
-}
-.op-img-badge strong { display: block; font-size: 22px; color: var(--alazan2); font-family: var(--ff-display); }
+/* escenarios bacantix */
+.bacantix-title{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--tierra);margin-bottom:16px;}
+.escenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:40px;}
+.esc-card{border-radius:var(--radius-md);padding:20px;border:1px solid;transition:transform .2s;}
+.esc-card:hover{transform:translateY(-3px);}
+.esc-num{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:10px;display:inline-block;margin-bottom:8px;}
+.esc-title{font-size:14px;font-weight:600;margin-bottom:6px;}
+.esc-text{font-size:12px;line-height:1.6;margin-bottom:10px;}
+.esc-items{font-size:11px;line-height:1.9;}
+.esc-dot{display:inline-block;width:5px;height:5px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+.esc-ideal{background:#E1F5EE;border-color:#1D9E75;}
+.esc-ideal .esc-num{background:#1D9E75;color:#fff;}
+.esc-ideal .esc-title{color:#04342C;}
+.esc-ideal .esc-text{color:#0F6E56;}
+.esc-ideal .esc-items{color:#085041;}
+.esc-ideal .esc-dot{background:#1D9E75;}
+.esc-b{background:#EEEDFE;border-color:#7F77DD;}
+.esc-b .esc-num{background:#7F77DD;color:#fff;}
+.esc-b .esc-title{color:#26215C;}
+.esc-b .esc-text{color:#534AB7;}
+.esc-b .esc-items{color:#3C3489;}
+.esc-b .esc-dot{background:#7F77DD;}
+.esc-c{background:#FAEEDA;border-color:#BA7517;}
+.esc-c .esc-num{background:#BA7517;color:#fff;}
+.esc-c .esc-title{color:#412402;}
+.esc-c .esc-text{color:#854F0B;}
+.esc-c .esc-items{color:#7A3B00;}
+.esc-c .esc-dot{background:#C4720A;}
 
-.op-cards { display: flex; flex-direction: column; gap: 16px; }
-.op-card {
-  background: var(--blanco); border-radius: var(--radius-md);
-  padding: 20px 22px; border: 1px solid var(--polvo);
-  display: flex; gap: 16px; align-items: flex-start;
-  box-shadow: 0 2px 12px rgba(26,15,0,0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.op-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-.op-icon {
-  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-  background: transparent;
-  border: 1.5px solid var(--alazan);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--ff-display); font-size: 14px; font-weight: 600;
-  color: var(--alazan); font-style: italic;
-  margin-top: 2px;
-}
-.op-card-title { font-size: 15px; font-weight: 600; color: var(--negro); margin-bottom: 4px; }
-.op-card-text { font-size: 13px; color: var(--tierra); line-height: 1.6; }
+/* preguntas bacantix */
+.bacantix-preguntas{background:var(--negro);border-radius:var(--radius-lg);padding:24px 28px;}
+.bp-title{font-family:var(--ff-display);font-size:16px;color:var(--arena);margin-bottom:6px;font-style:italic;}
+.bp-sub{font-size:12px;color:rgba(245,222,179,.5);margin-bottom:20px;}
+.bp-items{display:flex;flex-direction:column;gap:10px;}
+.bp-item{display:flex;align-items:flex-start;gap:14px;padding:12px 14px;background:rgba(245,222,179,.05);border-radius:8px;border:1px solid rgba(245,222,179,.08);}
+.bp-q-num{width:24px;height:24px;border-radius:50%;background:var(--alazan);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.bp-q-text{font-size:13px;color:var(--arena);font-weight:500;margin-bottom:2px;}
+.bp-q-why{font-size:11px;color:rgba(245,222,179,.45);line-height:1.5;}
 
-/* ============================================================
-   03 COMO FUNCIONA
-   ============================================================ */
-.como {
-  padding: 100px 0;
-  background: var(--negro);
-  position: relative; overflow: hidden;
-}
-.como::before {
-  content: '';
-  position: absolute; inset: 0;
-  background-image: url('img6.png');
-  background-size: cover; opacity: 0.06;
-}
-.como .section-title { color: var(--arena); }
-.como .section-lead { color: rgba(245,222,179,0.6); }
-.como .section-eyebrow { color: var(--alazan2); }
+/* QUINIELA */
+.quiniela-sec{padding:96px 0;background:var(--albero);}
+.quiniela-hero-img{width:100%;height:260px;object-fit:cover;border-radius:var(--radius-lg);margin-bottom:52px;box-shadow:var(--shadow-lg);object-position:center 60%;}
+.quiniela-layout{display:grid;grid-template-columns:1fr 360px;gap:36px;align-items:start;}
+.q-form-card{background:var(--blanco);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--polvo);}
+.q-form-header{background:var(--negro);padding:18px 22px;}
+.q-form-header-title{font-family:var(--ff-display);font-size:17px;color:var(--arena);font-weight:600;}
+.q-form-header-sub{font-size:11px;color:var(--alazan);margin-top:3px;}
+.q-form-body{padding:22px;display:flex;flex-direction:column;gap:16px;}
+.q-block-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--alazan);padding-bottom:7px;border-bottom:1px solid var(--polvo);margin-bottom:3px;}
+.q-field-label{font-size:11px;font-weight:600;color:var(--tierra);margin-bottom:4px;display:block;}
+.q-req{color:var(--alazan);}
+.q-input{width:100%;padding:8px 11px;border-radius:var(--radius-sm);border:1px solid var(--polvo);background:var(--albero);font-size:13px;color:var(--negro);font-family:var(--ff-body);transition:border-color .2s;outline:none;}
+.q-input:focus{border-color:var(--alazan);}
+.q-input::placeholder{color:#C0B4A4;}
+.q-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.q-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
+.q-chip{font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid var(--polvo);background:var(--albero);color:var(--tierra);cursor:pointer;transition:all .15s;user-select:none;font-family:var(--ff-body);}
+.q-chip:hover{border-color:var(--alazan);color:var(--alazan);}
+.q-chip.sel{background:var(--alazan);border-color:var(--alazan);color:#fff;}
+.q-estrella .q-chip.sel{background:var(--caoba);border-color:var(--caoba);}
+.estrella-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--caoba);padding-bottom:7px;border-bottom:1px solid rgba(122,59,0,.15);margin-bottom:3px;display:flex;align-items:center;gap:6px;}
+.pts-badge{background:var(--caoba);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.q-submit{background:var(--alazan);color:#fff;border:none;border-radius:var(--radius-sm);padding:12px 18px;font-size:14px;font-weight:600;width:100%;cursor:pointer;font-family:var(--ff-body);transition:background .2s,transform .2s;box-shadow:0 4px 16px rgba(196,114,10,.35);}
+.q-submit:hover{background:var(--caoba);transform:translateY(-1px);}
+.q-score-panel{display:flex;flex-direction:column;gap:14px;position:sticky;top:76px;}
+.q-score-card{background:var(--negro);border-radius:var(--radius-md);padding:22px;color:var(--arena);}
+.q-score-title{font-family:var(--ff-display);font-size:14px;color:var(--arena);margin-bottom:14px;font-style:italic;}
+.q-score-num{font-family:var(--ff-display);font-size:60px;font-weight:700;color:var(--alazan2);line-height:1;margin-bottom:3px;}
+.q-score-of{font-size:12px;color:rgba(245,222,179,.4);}
+.q-score-bar-wrap{margin-top:14px;height:4px;background:rgba(245,222,179,.1);border-radius:2px;}
+.q-score-bar{height:4px;background:var(--alazan);border-radius:2px;transition:width .4s;width:0%;}
+.q-rules-card{background:var(--blanco);border-radius:var(--radius-md);padding:18px;border:1px solid var(--polvo);}
+.q-rules-title{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--tierra);margin-bottom:10px;}
+.q-rule{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--polvo);font-size:12px;}
+.q-rule:last-child{border-bottom:none;}
+.q-rule-desc{color:var(--tierra);}
+.q-rule-val{font-weight:600;color:var(--negro);}
 
-.como-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px; align-items: start;
-  position: relative; z-index: 1;
-}
-.como-img {
-  border-radius: var(--radius-lg); overflow: hidden;
-  box-shadow: 0 8px 48px rgba(0,0,0,0.5);
-  aspect-ratio: 3/2;
-}
-.como-img img { height: 100%; }
+/* NOTA CRM */
+.nota-crm{padding:48px 0;background:var(--negro);}
+.nota-inner{max-width:800px;margin:0 auto;display:flex;gap:20px;align-items:flex-start;padding:24px 28px;background:rgba(196,114,10,.1);border:1px solid rgba(196,114,10,.3);border-radius:var(--radius-lg);}
+.nota-icon{font-size:24px;flex-shrink:0;margin-top:2px;}
+.nota-title{font-size:14px;font-weight:600;color:var(--alazan2);margin-bottom:6px;}
+.nota-text{font-size:13px;color:rgba(245,222,179,.65);line-height:1.7;}
 
-.como-steps { display: flex; flex-direction: column; gap: 0; }
-.como-step {
-  display: flex; gap: 20px;
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(245,222,179,0.08);
-  position: relative;
-}
-.como-step:last-child { border-bottom: none; }
-.step-num-wrap { display: flex; flex-direction: column; align-items: center; gap: 0; flex-shrink: 0; }
-.step-num {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: var(--alazan); color: #fff;
-  font-size: 14px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.step-line {
-  width: 1px; flex: 1; min-height: 20px;
-  background: linear-gradient(to bottom, rgba(196,114,10,0.4), transparent);
-  margin-top: 4px;
-}
-.como-step:last-child .step-line { display: none; }
-.step-body { padding-top: 6px; }
-.step-title { font-size: 14px; font-weight: 600; color: var(--arena); margin-bottom: 4px; }
-.step-text { font-size: 13px; color: rgba(245,222,179,0.55); line-height: 1.6; }
-.step-tag {
-  display: inline-block; margin-top: 6px;
-  font-size: 10px; font-weight: 600; letter-spacing: 0.05em;
-  padding: 2px 8px; border-radius: 10px;
-  background: rgba(196,114,10,0.2); color: var(--alazan2);
-  border: 1px solid rgba(196,114,10,0.3);
-}
+/* FLUJO DEMO INTERACTIVO */
+.flujo-sec{padding:96px 0;background:var(--albero);}
+.flujo-timeline{display:flex;gap:0;margin-bottom:40px;overflow-x:auto;padding-bottom:4px;}
+.ft-step{flex-shrink:0;padding:10px 16px;font-size:11px;font-weight:600;letter-spacing:.04em;cursor:pointer;border-bottom:2px solid var(--polvo);color:var(--tierra);transition:all .2s;white-space:nowrap;user-select:none;}
+.ft-step:hover{color:var(--alazan);}
+.ft-step.active{color:var(--alazan);border-bottom-color:var(--alazan);}
+.flujo-panels{}
+.flujo-panel{display:none;animation:fadeIn .4s ease;}
+.flujo-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+.flujo-panel.single{display:none;}
+.flujo-panel.single.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fp-text{}
+.fp-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--alazan);margin-bottom:8px;}
+.fp-title{font-family:var(--ff-display);font-size:clamp(20px,3vw,28px);font-weight:700;color:var(--negro);margin-bottom:10px;line-height:1.2;}
+.fp-title em{font-style:italic;color:var(--caoba);}
+.fp-body{font-size:14px;color:var(--tierra);line-height:1.8;margin-bottom:16px;}
+.fp-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.fp-tag{font-size:10px;font-weight:600;letter-spacing:.05em;padding:3px 10px;border-radius:10px;background:var(--polvo);color:var(--tierra);}
+.fp-visual{background:var(--blanco);border-radius:var(--radius-lg);border:1px solid var(--polvo);overflow:hidden;box-shadow:var(--shadow);}
+.fp-visual img{height:220px;object-fit:cover;}
+.fp-visual-body{padding:20px;}
+.fp-nav{display:flex;gap:10px;margin-top:28px;}
+.fp-btn{padding:9px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--ff-body);transition:all .2s;border:1.5px solid;}
+.fp-btn-prev{background:var(--blanco);border-color:var(--polvo);color:var(--tierra);}
+.fp-btn-prev:hover{border-color:var(--alazan);color:var(--alazan);}
+.fp-btn-next{background:var(--alazan);border-color:var(--alazan);color:#fff;}
+.fp-btn-next:hover{background:var(--caoba);border-color:var(--caoba);}
 
-/* ============================================================
-   04 QUINIELA DEMO
-   ============================================================ */
-.quiniela-sec {
-  padding: 100px 0;
-  background: var(--albero);
-}
-.quiniela-hero-img {
-  width: 100%; height: 280px; object-fit: cover;
-  border-radius: var(--radius-lg);
-  margin-bottom: 56px;
-  box-shadow: var(--shadow-lg);
-  object-position: center 60%;
-}
-.quiniela-layout {
-  display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 40px; align-items: start;
-}
-.q-form-card {
-  background: var(--blanco); border-radius: var(--radius-lg);
-  overflow: hidden; box-shadow: var(--shadow);
-  border: 1px solid var(--polvo);
-}
-.q-form-header {
-  background: var(--negro); padding: 20px 24px;
-}
-.q-form-header-title {
-  font-family: var(--ff-display); font-size: 18px;
-  color: var(--arena); font-weight: 600;
-}
-.q-form-header-sub { font-size: 12px; color: var(--alazan); margin-top: 4px; }
-.q-form-body { padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+/* mockup entrada */
+.mockup-entrada{background:linear-gradient(135deg,#FAEEDA,#F5DEB3);border-radius:var(--radius-md);padding:20px;border:1px solid #BA7517;font-family:var(--ff-body);}
+.me-evento{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--caoba);margin-bottom:4px;}
+.me-titulo{font-family:var(--ff-display);font-size:16px;font-weight:700;color:var(--negro);margin-bottom:2px;}
+.me-fecha{font-size:12px;color:var(--tierra);margin-bottom:14px;}
+.me-datos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.me-dato{font-size:11px;}
+.me-dato-label{color:var(--tierra);font-weight:500;}
+.me-dato-val{color:var(--negro);font-weight:600;}
+.me-codigos{display:flex;gap:12px;align-items:center;padding:12px;background:rgba(26,15,0,.05);border-radius:8px;border:1px dashed #BA7517;}
+.me-qr{width:56px;height:56px;background:var(--negro);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--arena);font-size:8px;font-weight:700;text-align:center;line-height:1.3;flex-shrink:0;}
+.me-cod-info{}
+.me-cod-label{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:2px;}
+.me-cod-val{font-size:16px;font-weight:700;letter-spacing:.15em;color:var(--negro);font-family:monospace;}
+.me-cod-hint{font-size:10px;color:var(--tierra);margin-top:2px;}
 
-.q-block-label {
-  font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--alazan);
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--polvo);
-  margin-bottom: 4px;
-}
-.q-field-label {
-  font-size: 11px; font-weight: 600; color: var(--tierra);
-  margin-bottom: 5px; display: block;
-}
-.q-req { color: var(--alazan); }
-.q-input {
-  width: 100%; padding: 9px 12px; border-radius: var(--radius-sm);
-  border: 1px solid var(--polvo); background: var(--albero);
-  font-size: 13px; color: var(--negro); font-family: var(--ff-body);
-  transition: border-color 0.2s;
-  outline: none;
-}
-.q-input:focus { border-color: var(--alazan); }
-.q-input::placeholder { color: #C0B4A4; }
-.q-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.q-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-.q-chip {
-  font-size: 12px; padding: 6px 14px; border-radius: 20px;
-  border: 1px solid var(--polvo); background: var(--albero);
-  color: var(--tierra); cursor: pointer;
-  transition: all 0.15s; user-select: none;
-  font-family: var(--ff-body);
-}
-.q-chip:hover { border-color: var(--alazan); color: var(--alazan); }
-.q-chip.sel { background: var(--alazan); border-color: var(--alazan); color: #fff; }
-.q-estrella .q-chip.sel { background: var(--caoba); border-color: var(--caoba); }
-.estrella-label {
-  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--caoba);
-  padding-bottom: 8px; border-bottom: 1px solid rgba(122,59,0,0.15);
-  margin-bottom: 4px; display: flex; align-items: center; gap: 6px;
-}
-.pts-badge {
-  background: var(--caoba); color: #fff;
-  font-size: 10px; font-weight: 700; padding: 2px 8px;
-  border-radius: 10px;
-}
-.q-submit {
-  background: var(--alazan); color: #fff;
-  border: none; border-radius: var(--radius-sm);
-  padding: 13px 20px; font-size: 14px; font-weight: 600;
-  width: 100%; cursor: pointer; font-family: var(--ff-body);
-  transition: background 0.2s, transform 0.2s;
-  letter-spacing: 0.02em;
-  box-shadow: 0 4px 16px rgba(196,114,10,0.35);
-}
-.q-submit:hover { background: var(--caoba); transform: translateY(-1px); }
+/* resultado comparativa */
+.resultado-table{width:100%;border-collapse:collapse;font-size:12px;}
+.resultado-table th{text-align:left;padding:8px 10px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--tierra);border-bottom:2px solid var(--polvo);}
+.resultado-table td{padding:8px 10px;border-bottom:1px solid var(--polvo);}
+.resultado-table tr:last-child td{border-bottom:none;}
+.td-q{color:var(--negro);font-weight:500;}
+.td-real{color:var(--negro);}
+.td-pred{color:var(--tierra);}
+.td-ok{color:#1D9E75;font-weight:700;}
+.td-no{color:#D85A30;}
+.score-final{margin-top:12px;padding:10px 14px;background:var(--negro);border-radius:8px;display:flex;justify-content:space-between;align-items:center;}
+.sf-label{font-size:12px;color:rgba(245,222,179,.6);}
+.sf-val{font-size:18px;font-weight:700;color:var(--alazan2);font-family:var(--ff-display);}
 
-/* puntuación lateral */
-.q-score-panel { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 76px; }
-.q-score-card {
-  background: var(--negro); border-radius: var(--radius-md);
-  padding: 24px; color: var(--arena);
-}
-.q-score-title { font-family: var(--ff-display); font-size: 15px; color: var(--arena); margin-bottom: 16px; font-style: italic; }
-.q-score-num {
-  font-family: var(--ff-display); font-size: 64px; font-weight: 700;
-  color: var(--alazan2); line-height: 1; margin-bottom: 4px;
-}
-.q-score-of { font-size: 13px; color: rgba(245,222,179,0.45); }
-.q-score-bar-wrap { margin-top: 16px; height: 4px; background: rgba(245,222,179,0.1); border-radius: 2px; }
-.q-score-bar { height: 4px; background: var(--alazan); border-radius: 2px; transition: width 0.4s; width: 0%; }
+/* pantalla ganador */
+.ganador-screen{background:linear-gradient(135deg,var(--negro),#3D1F00);border-radius:var(--radius-lg);padding:28px;text-align:center;border:1px solid rgba(196,114,10,.3);}
+.gs-trophy{font-size:40px;margin-bottom:12px;}
+.gs-titulo{font-family:var(--ff-display);font-size:22px;font-weight:700;color:var(--alazan2);margin-bottom:6px;}
+.gs-nombre{font-size:18px;font-weight:600;color:var(--arena);margin-bottom:8px;}
+.gs-puntos{font-size:13px;color:rgba(245,222,179,.6);margin-bottom:16px;}
+.gs-premio{background:rgba(196,114,10,.15);border:1px solid rgba(196,114,10,.4);border-radius:10px;padding:14px;margin-bottom:16px;}
+.gs-premio-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--alazan);margin-bottom:4px;}
+.gs-premio-val{font-size:15px;font-weight:600;color:var(--arena);}
+.gs-msg{font-size:12px;color:rgba(245,222,179,.45);line-height:1.6;}
 
-.q-rules-card {
-  background: var(--blanco); border-radius: var(--radius-md);
-  padding: 20px; border: 1px solid var(--polvo);
-}
-.q-rules-title { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tierra); margin-bottom: 12px; }
-.q-rule { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--polvo); font-size: 12px; }
-.q-rule:last-child { border-bottom: none; }
-.q-rule-desc { color: var(--tierra); }
-.q-rule-val { font-weight: 600; color: var(--negro); }
+/* HOJA DE RUTA */
+.ruta-sec{padding:96px 0;background:var(--albero);position:relative;overflow:hidden;}
+.ruta-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:400px;background-image:url('img6.png');background-size:cover;opacity:.07;}
+.ruta-content{position:relative;z-index:1;}
+.fases{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.fase{background:var(--blanco);border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 2px 16px rgba(26,15,0,.06);border:1px solid var(--polvo);transition:transform .2s,box-shadow .2s;}
+.fase:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+.fase-header{padding:22px;background:var(--negro);}
+.fase-num{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--alazan);margin-bottom:7px;}
+.fase-titulo{font-family:var(--ff-display);font-size:19px;font-weight:700;color:var(--arena);line-height:1.2;}
+.fase-tiempo{margin-top:6px;font-size:11px;color:rgba(245,222,179,.4);}
+.fase-body{padding:18px 22px;}
+.fase-item{display:flex;align-items:flex-start;gap:9px;padding:6px 0;border-bottom:1px solid var(--polvo);font-size:12px;color:var(--tierra);}
+.fase-item:last-child{border-bottom:none;}
+.fase-dot{width:5px;height:5px;border-radius:50%;background:var(--alazan);flex-shrink:0;margin-top:6px;}
 
-/* ============================================================
-   05 CRM
-   ============================================================ */
-.crm-sec {
-  padding: 100px 0;
-  background: var(--negro);
-  position: relative; overflow: hidden;
-}
-.crm-bg {
-  position: absolute; inset: 0;
-  background-image: url('img5.png');
-  background-size: cover; background-position: center;
-  opacity: 0.18;
-}
-.crm-sec .section-title { color: var(--arena); }
-.crm-sec .section-lead { color: rgba(245,222,179,0.6); }
-.crm-sec .section-eyebrow { color: var(--alazan2); }
+/* FOOTER */
+footer{background:var(--negro);border-top:1px solid rgba(196,114,10,.2);padding:28px 24px;text-align:center;}
+.footer-logo{font-family:var(--ff-display);font-size:17px;font-style:italic;color:var(--arena);margin-bottom:6px;}
+.footer-logo span{color:var(--alazan);font-style:normal;}
+.footer-text{font-size:11px;color:rgba(245,222,179,.3);}
 
-.crm-content { position: relative; z-index: 1; }
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
 
-.seg-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px; margin-bottom: 40px;
+/* RESPONSIVE */
+@media(max-width:900px){
+  .op-grid,.como-grid,.valid-intro,.quiniela-layout{grid-template-columns:1fr;}
+  .op-img-wrap,.como-img,.valid-img{aspect-ratio:16/9;}
+  .q-score-panel{position:static;}
+  .fases{grid-template-columns:1fr;max-width:460px;margin:0 auto;}
+  .escenarios{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .nav-hamburger{display:flex;}
+  .flujo-panel.active{grid-template-columns:1fr;}
 }
-.seg-card {
-  border-radius: var(--radius-md); padding: 20px 22px;
-  border: 1px solid; transition: transform 0.2s;
+@media(max-width:600px){
+  .vf-step{min-width:100%;border-radius:0!important;border-left:none;border-right:none;}
+  .valid-flow{flex-direction:column;}
+  .vf-arrow{display:none!important;}
+  .q-row{grid-template-columns:1fr;}
 }
-.seg-card:hover { transform: translateY(-3px); }
-.seg-card.full { grid-column: 1 / -1; }
-.seg-tag {
-  display: inline-block; font-size: 10px; font-weight: 700;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 3px 10px; border-radius: 10px; margin-bottom: 8px;
-}
-.seg-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-.seg-trigger { font-size: 12px; margin-bottom: 10px; line-height: 1.5; opacity: 0.75; }
-.seg-actions { font-size: 12px; line-height: 1.9; }
-.seg-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
-
-.sc-amber { background: rgba(196,114,10,0.12); border-color: rgba(196,114,10,0.35); }
-.sc-amber .seg-tag { background: var(--alazan); color: #fff; }
-.sc-amber .seg-name { color: var(--alazan2); }
-.sc-amber .seg-trigger { color: rgba(245,222,179,0.65); }
-.sc-amber .seg-actions { color: rgba(245,222,179,0.55); }
-.sc-amber .seg-dot { background: var(--alazan2); }
-
-.sc-verde { background: rgba(45,122,95,0.12); border-color: rgba(45,122,95,0.35); }
-.sc-verde .seg-tag { background: var(--verde); color: #fff; }
-.sc-verde .seg-name { color: #7DCAAE; }
-.sc-verde .seg-trigger { color: rgba(245,222,179,0.65); }
-.sc-verde .seg-actions { color: rgba(245,222,179,0.55); }
-.sc-verde .seg-dot { background: #7DCAAE; }
-
-.sc-gris { background: rgba(245,222,179,0.06); border-color: rgba(245,222,179,0.12); }
-.sc-gris .seg-tag { background: rgba(245,222,179,0.15); color: var(--arena); }
-.sc-gris .seg-name { color: var(--arena); }
-.sc-gris .seg-trigger { color: rgba(245,222,179,0.65); }
-.sc-gris .seg-actions { color: rgba(245,222,179,0.55); }
-.sc-gris .seg-dot { background: rgba(245,222,179,0.4); }
-
-.sc-coral { background: rgba(196,60,30,0.12); border-color: rgba(196,60,30,0.35); }
-.sc-coral .seg-tag { background: #C43C1E; color: #fff; }
-.sc-coral .seg-name { color: #F0997B; }
-.sc-coral .seg-trigger { color: rgba(245,222,179,0.65); }
-.sc-coral .seg-actions { color: rgba(245,222,179,0.55); }
-.sc-coral .seg-dot { background: #F0997B; }
-
-/* flujo GHL */
-.crm-flow {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 0; position: relative;
-  background: rgba(245,222,179,0.04);
-  border: 1px solid rgba(245,222,179,0.1);
-  border-radius: var(--radius-md); overflow: hidden;
-}
-.crm-flow-step {
-  padding: 20px 18px;
-  border-right: 1px solid rgba(245,222,179,0.08);
-  position: relative;
-}
-.crm-flow-step:last-child { border-right: none; }
-.cfs-num {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
-  color: var(--alazan); margin-bottom: 6px;
-}
-.cfs-title { font-size: 13px; font-weight: 600; color: var(--arena); margin-bottom: 4px; }
-.cfs-text { font-size: 11px; color: rgba(245,222,179,0.5); line-height: 1.5; }
-
-/* ============================================================
-   06 ARQUITECTURA
-   ============================================================ */
-.arq-sec {
-  padding: 100px 0;
-  background: var(--albero);
-}
-.arq-tabs {
-  display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap;
-}
-.arq-tab {
-  font-size: 12px; font-weight: 600; letter-spacing: 0.05em;
-  padding: 8px 20px; border-radius: 20px;
-  border: 1.5px solid var(--polvo); background: var(--blanco);
-  color: var(--tierra); cursor: pointer;
-  transition: all 0.2s; user-select: none;
-  font-family: var(--ff-body);
-}
-.arq-tab:hover { border-color: var(--alazan); color: var(--alazan); }
-.arq-tab.active { background: var(--alazan); border-color: var(--alazan); color: #fff; }
-.arq-panel { display: none; }
-.arq-panel.active { display: block; }
-
-/* diagrama compartido */
-.arq-diagram {
-  background: var(--blanco); border-radius: var(--radius-lg);
-  border: 1px solid var(--polvo); padding: 32px 24px;
-  box-shadow: 0 2px 16px rgba(26,15,0,0.05);
-  overflow-x: auto;
-}
-.arq-layer { margin-bottom: 8px; }
-.arq-layer-label {
-  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--tierra);
-  margin-bottom: 8px; padding-left: 2px;
-}
-.arq-row { display: flex; gap: 8px; align-items: stretch; flex-wrap: nowrap; }
-.arq-box {
-  flex: 1; min-width: 0; border-radius: 10px; padding: 12px 14px;
-  border: 1px solid; cursor: default;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-.arq-box:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(26,15,0,0.1); }
-.arq-box-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
-.arq-box-sub { font-size: 11px; line-height: 1.4; opacity: 0.8; }
-.arq-arrow { display: flex; justify-content: center; align-items: center; height: 24px; color: var(--tierra); font-size: 14px; opacity: 0.5; }
-.arq-arrow-row { display: flex; gap: 8px; height: 20px; }
-.arq-arrow-row span { flex: 1; display: flex; justify-content: center; align-items: center; color: var(--tierra); font-size: 13px; opacity: 0.45; }
-
-.ab-amber { background: #FAEEDA; border-color: #BA7517; }
-.ab-amber .arq-box-title { color: #412402; }
-.ab-amber .arq-box-sub { color: #7A3B00; }
-
-.ab-teal { background: #E1F5EE; border-color: #1D9E75; }
-.ab-teal .arq-box-title { color: #04342C; }
-.ab-teal .arq-box-sub { color: #0F6E56; }
-
-.ab-purple { background: #EEEDFE; border-color: #7F77DD; }
-.ab-purple .arq-box-title { color: #26215C; }
-.ab-purple .arq-box-sub { color: #534AB7; }
-
-.ab-coral { background: #FAECE7; border-color: #D85A30; }
-.ab-coral .arq-box-title { color: #4A1B0C; }
-.ab-coral .arq-box-sub { color: #993C1D; }
-
-.ab-gray { background: var(--albero); border-color: var(--polvo); }
-.ab-gray .arq-box-title { color: var(--negro); }
-.ab-gray .arq-box-sub { color: var(--tierra); }
-
-.ab-verde { background: #E8F5F0; border-color: #2D7A5F; }
-.ab-verde .arq-box-title { color: #04342C; }
-.ab-verde .arq-box-sub { color: #2D7A5F; }
-
-.opt-header {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
-  text-transform: uppercase; padding: 6px 14px; border-radius: 6px;
-  margin-bottom: 10px; display: inline-block;
-}
-.opt-a-h { background: #E1F5EE; color: #085041; border: 1px solid #1D9E75; }
-.opt-b-h { background: #EEEDFE; color: #26215C; border: 1px solid #7F77DD; }
-
-.arq-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.arq-merge {
-  display: flex; align-items: center; gap: 10px;
-  margin: 12px 0; font-size: 11px; color: var(--tierra);
-}
-.arq-merge-line { flex: 1; height: 1px; background: var(--polvo); }
-
-@media (max-width: 640px) {
-  .arq-two-col { grid-template-columns: 1fr; }
-  .arq-row { flex-wrap: wrap; }
-  .arq-box { min-width: calc(50% - 4px); }
-}
-
-/* ============================================================
-   07 HOJA DE RUTA
-   ============================================================ */
-.ruta-sec {
-  padding: 100px 0;
-  background: var(--albero);
-  position: relative; overflow: hidden;
-}
-.ruta-sec::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 400px;
-  background-image: url('img6.png');
-  background-size: cover; opacity: 0.07;
-}
-.ruta-content { position: relative; z-index: 1; }
-
-.fases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.fase {
-  background: var(--blanco); border-radius: var(--radius-lg);
-  overflow: hidden; box-shadow: 0 2px 16px rgba(26,15,0,0.06);
-  border: 1px solid var(--polvo);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.fase:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
-.fase-header { padding: 24px; background: var(--negro); }
-.fase-num {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--alazan); margin-bottom: 8px;
-}
-.fase-titulo {
-  font-family: var(--ff-display); font-size: 20px; font-weight: 700;
-  color: var(--arena); line-height: 1.2;
-}
-.fase-tiempo {
-  margin-top: 8px; font-size: 11px; color: rgba(245,222,179,0.45);
-}
-.fase-body { padding: 20px 24px; }
-.fase-item {
-  display: flex; align-items: flex-start; gap: 10px;
-  padding: 7px 0; border-bottom: 1px solid var(--polvo);
-  font-size: 13px; color: var(--tierra);
-}
-.fase-item:last-child { border-bottom: none; }
-.fase-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--alazan); flex-shrink: 0; margin-top: 7px;
-}
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-footer {
-  background: var(--negro);
-  border-top: 1px solid rgba(196,114,10,0.2);
-  padding: 32px 24px;
-  text-align: center;
-}
-.footer-logo {
-  font-family: var(--ff-display); font-size: 18px;
-  font-style: italic; color: var(--arena);
-  margin-bottom: 8px;
-}
-.footer-logo span { color: var(--alazan); font-style: normal; }
-.footer-text { font-size: 12px; color: rgba(245,222,179,0.3); }
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width: 900px) {
-  .op-grid { grid-template-columns: 1fr; }
-  .op-img-wrap { aspect-ratio: 16/9; }
-  .como-grid { grid-template-columns: 1fr; }
-  .como-img { aspect-ratio: 16/9; }
-  .quiniela-layout { grid-template-columns: 1fr; }
-  .q-score-panel { position: static; }
-  .crm-flow { grid-template-columns: 1fr 1fr; }
-  .crm-flow-step:nth-child(2) { border-right: none; }
-  .crm-flow-step:nth-child(1),
-  .crm-flow-step:nth-child(2) { border-bottom: 1px solid rgba(245,222,179,0.08); }
-  .fases { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
-  .nav-links { display: none; }
-  .nav-hamburger { display: flex; }
-}
-@media (max-width: 600px) {
-  .seg-grid { grid-template-columns: 1fr; }
-  .seg-card.full { grid-column: 1; }
-  .crm-flow { grid-template-columns: 1fr; }
-  .crm-flow-step { border-right: none; border-bottom: 1px solid rgba(245,222,179,0.08); }
-  .crm-flow-step:last-child { border-bottom: none; }
-  .q-row { grid-template-columns: 1fr; }
-  .hero-title { font-size: 32px; }
-}
-
-/* ============================================================
-   SCROLL REVEAL
-   ============================================================ */
-.reveal {
-  opacity: 0; transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
@@ -740,21 +355,19 @@ footer {
   <ul class="nav-links">
     <li><a href="#oportunidad">La oportunidad</a></li>
     <li><a href="#como">Cómo funciona</a></li>
+    <li><a href="#validacion">Validación entrada</a></li>
     <li><a href="#quiniela">La quiniela</a></li>
-    <li><a href="#crm">CRM</a></li>
-    <li><a href="#arquitectura">Arquitectura</a></li>
+    <li><a href="#flujo">Demo del flujo</a></li>
     <li><a href="#ruta">Hoja de ruta</a></li>
   </ul>
-  <div class="nav-hamburger" onclick="toggleMenu()" aria-label="Menú">
-    <span></span><span></span><span></span>
-  </div>
+  <div class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#oportunidad" onclick="closeMenu()">La oportunidad</a>
   <a href="#como" onclick="closeMenu()">Cómo funciona</a>
+  <a href="#validacion" onclick="closeMenu()">Validación entrada</a>
   <a href="#quiniela" onclick="closeMenu()">La quiniela</a>
-  <a href="#crm" onclick="closeMenu()">CRM</a>
-  <a href="#arquitectura" onclick="closeMenu()">Arquitectura</a>
+  <a href="#flujo" onclick="closeMenu()">Demo del flujo</a>
   <a href="#ruta" onclick="closeMenu()">Hoja de ruta</a>
 </div>
 
@@ -764,64 +377,32 @@ footer {
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">Propuesta de sistema</div>
-    <h1 class="hero-title">
-      Conoce a tu afición.
-      <em>Corrida a corrida.</em>
-    </h1>
-    <p class="hero-sub">Un sistema de quiniela que convierte cada festejo en una oportunidad de conocimiento, engagement y fidelización de tu público.</p>
+    <h1 class="hero-title">La afición también torea.<em>Tu quiniela, corrida a corrida.</em></h1>
+    <p class="hero-sub">Una quiniela exclusiva para los espectadores con entrada. Predice la tarde, compite con la afición y gana el reconocimiento que merece tu intuición taurina.</p>
     <a href="#oportunidad" class="hero-cta">Descubrir el sistema →</a>
   </div>
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
-  </div>
+  <div class="hero-scroll"><div class="hero-scroll-line"></div></div>
 </section>
 
 <!-- 02 OPORTUNIDAD -->
 <section id="oportunidad" class="oportunidad">
   <div class="container">
     <div class="op-grid">
-      <div>
-        <div class="op-img-wrap reveal">
+      <div class="reveal">
+        <div class="op-img-wrap">
           <img src="img2.png" alt="Espectadores en la plaza">
-          <div class="op-img-badge">
-            <strong>Cada corrida</strong>
-            una nueva oportunidad
-          </div>
+          <div class="op-img-badge"><strong>Cada corrida</strong>una nueva oportunidad</div>
         </div>
       </div>
       <div>
         <p class="section-eyebrow reveal">La oportunidad</p>
         <h2 class="section-title reveal">Tu público, <em>al descubierto</em></h2>
-        <p class="section-lead reveal">Cada festejo reúne a cientos de personas con una pasión en común. Este sistema convierte esa energía en conocimiento real, relaciones duraderas y comunicación de valor.</p>
+        <p class="section-lead reveal">Cada festejo reúne a cientos de personas con una pasión en común. Este sistema convierte esa energía en participación activa, conocimiento real y relaciones duraderas.</p>
         <div class="op-cards">
-          <div class="op-card reveal">
-            <div class="op-icon">I</div>
-            <div>
-              <div class="op-card-title">Identidad del espectador</div>
-              <div class="op-card-text">Nombre, contacto, edad, ciudad de procedencia y perfil taurino de cada persona que asiste a tus festejos.</div>
-            </div>
-          </div>
-          <div class="op-card reveal">
-            <div class="op-icon">II</div>
-            <div>
-              <div class="op-card-title">Inteligencia de temporada</div>
-              <div class="op-card-text">Quién repite, a qué toreros sigue, desde qué ciudades viene tu público y qué festejos generan mayor participación.</div>
-            </div>
-          </div>
-          <div class="op-card reveal">
-            <div class="op-icon">III</div>
-            <div>
-              <div class="op-card-title">Comunicación directa y personalizada</div>
-              <div class="op-card-text">Canal propio de comunicación con tu afición: email y SMS segmentados según el perfil de cada espectador.</div>
-            </div>
-          </div>
-          <div class="op-card reveal">
-            <div class="op-icon">IV</div>
-            <div>
-              <div class="op-card-title">Fidelización activa</div>
-              <div class="op-card-text">Un programa de quiniela que genera expectativa antes del festejo y mantiene el vínculo mucho más allá del día de la corrida.</div>
-            </div>
-          </div>
+          <div class="op-card reveal"><div class="op-icon">I</div><div><div class="op-card-title">Participación exclusiva</div><div class="op-card-text">Solo los espectadores con entrada válida pueden participar. La quiniela es un privilegio del público asistente.</div></div></div>
+          <div class="op-card reveal"><div class="op-icon">II</div><div><div class="op-card-title">Engagement antes del festejo</div><div class="op-card-text">El espectador llega con una predicción hecha. Eso genera expectativa, conversación y un vínculo emocional con la corrida.</div></div></div>
+          <div class="op-card reveal"><div class="op-icon">III</div><div><div class="op-card-title">Reconocimiento al ganador</div><div class="op-card-text">El sistema identifica automáticamente quién acertó más. Un premio personalizado cierra el ciclo y fideliza al aficionado.</div></div></div>
+          <div class="op-card reveal"><div class="op-icon">IV</div><div><div class="op-card-title">Base para crecer</div><div class="op-card-text">Los datos recogidos en cada corrida son el punto de partida para conocer mejor a la afición y comunicarse con ella en el futuro.</div></div></div>
         </div>
       </div>
     </div>
@@ -834,85 +415,152 @@ footer {
     <div class="como-grid">
       <div>
         <p class="section-eyebrow reveal">Cómo funciona</p>
-        <h2 class="section-title reveal">Del cartel <em>al CRM</em></h2>
-        <p class="section-lead reveal">El sistema se activa antes del festejo y cierra el ciclo automáticamente tras la corrida.</p>
-
+        <h2 class="section-title reveal">Del cartel <em>a la quiniela</em></h2>
+        <p class="section-lead reveal">El sistema se activa antes del festejo y cierra el ciclo automáticamente tras la corrida. Cada paso es sencillo tanto para el espectador como para el empresario.</p>
         <div class="como-steps">
-          <div class="como-step reveal">
-            <div class="step-num-wrap">
-              <div class="step-num">1</div>
-              <div class="step-line"></div>
-            </div>
-            <div class="step-body">
-              <div class="step-title">Activación de la quiniela</div>
-              <div class="step-text">El empresario activa la quiniela para cada corrida. Se genera automáticamente una URL única y un código QR específico para ese festejo.</div>
-              <span class="step-tag">Días antes del festejo</span>
-            </div>
-          </div>
-          <div class="como-step reveal">
-            <div class="step-num-wrap">
-              <div class="step-num">2</div>
-              <div class="step-line"></div>
-            </div>
-            <div class="step-body">
-              <div class="step-title">Difusión del QR</div>
-              <div class="step-text">El código QR se imprime en la entrada, en carteles exteriores de la plaza y en zonas de paso. Cualquier persona puede participar escaneando el código.</div>
-              <span class="step-tag">Entrada · Carteles · Zonas de paso</span>
-            </div>
-          </div>
-          <div class="como-step reveal">
-            <div class="step-num-wrap">
-              <div class="step-num">3</div>
-              <div class="step-line"></div>
-            </div>
-            <div class="step-body">
-              <div class="step-title">Participación del espectador</div>
-              <div class="step-text">El espectador accede a la landing del festejo, rellena sus datos, su perfil taurino y las predicciones de la quiniela. Todo en menos de 2 minutos desde el móvil.</div>
-              <span class="step-tag">Hasta el inicio del festejo</span>
-            </div>
-          </div>
-          <div class="como-step reveal">
-            <div class="step-num-wrap">
-              <div class="step-num">4</div>
-              <div class="step-line"></div>
-            </div>
-            <div class="step-body">
-              <div class="step-title">Cierre de participación</div>
-              <div class="step-text">Al inicio del paseíllo la quiniela se cierra automáticamente. Una vez concluida la corrida, el empresario introduce el resultado real.</div>
-              <span class="step-tag">Al inicio del festejo</span>
-            </div>
-          </div>
-          <div class="como-step reveal">
-            <div class="step-num-wrap">
-              <div class="step-num">5</div>
-              <div class="step-line"></div>
-            </div>
-            <div class="step-body">
-              <div class="step-title">Resolución y comunicación</div>
-              <div class="step-text">El sistema calcula automáticamente el ganador y lanza la comunicación: el ganador recibe su premio, el resto recibe el resultado y un enlace a la próxima corrida.</div>
-              <span class="step-tag">En los 30–60 min tras el festejo</span>
-            </div>
-          </div>
+          <div class="como-step reveal"><div class="step-num-wrap"><div class="step-num">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Bacantix genera el código único de cada entrada</div><div class="step-text">Cada entrada impresa lleva dos elementos: el código QR de acceso a la quiniela y un código alfanumérico personal que identifica esa entrada de forma única.</div><span class="step-tag">Antes de la corrida</span></div></div>
+          <div class="como-step reveal"><div class="step-num-wrap"><div class="step-num">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">El espectador escanea el QR</div><div class="step-text">El QR aparece en la entrada impresa, en carteles exteriores de la plaza y en zonas de paso. Al escanearlo llega a la página del festejo.</div><span class="step-tag">Entrada · Carteles · Zonas de paso</span></div></div>
+          <div class="como-step reveal"><div class="step-num-wrap"><div class="step-num">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Introduce su código personal de entrada</div><div class="step-text">El sistema verifica en tiempo real con Bacantix que ese código pertenece a una entrada válida del evento y que no ha sido utilizado ya. Si es correcto, accede a la quiniela.</div><span class="step-tag">Verificación en tiempo real</span></div></div>
+          <div class="como-step reveal"><div class="step-num-wrap"><div class="step-num">4</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Rellena la quiniela</div><div class="step-text">Rellena sus datos y sus predicciones para la corrida. Todo en menos de 2 minutos desde el móvil. La quiniela se cierra al inicio del paseíllo.</div><span class="step-tag">Hasta el inicio del festejo</span></div></div>
+          <div class="como-step reveal"><div class="step-num-wrap"><div class="step-num">5</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Se introduce el resultado y se calcula el ganador</div><div class="step-text">Al finalizar la corrida, el empresario introduce el resultado real. El sistema compara automáticamente todas las predicciones y determina el ganador.</div><span class="step-tag">Tras la corrida</span></div></div>
         </div>
       </div>
       <div class="reveal">
-        <div class="como-img">
-          <img src="img3.png" alt="Entrada con código QR">
-        </div>
+        <div class="como-img"><img src="img3.png" alt="Entrada con QR"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 04 QUINIELA DEMO -->
+<!-- 04 VALIDACION BACANTIX -->
+<section id="validacion" class="valid-sec">
+  <div class="container">
+    <p class="section-eyebrow reveal">Validación de entrada</p>
+    <h2 class="section-title reveal">El portero <em>digital</em></h2>
+    <p class="section-lead reveal">Solo quien tiene una entrada válida puede participar. El sistema actúa como un portero que comprueba tu entrada antes de dejarte pasar — y funciona en tiempo real, incluyendo las entradas vendidas en taquilla hasta el último momento.</p>
+
+    <div class="valid-intro">
+      <div>
+        <!-- FLUJO VISUAL -->
+        <div class="bacantix-title reveal">¿Qué ocurre cuando alguien introduce su código?</div>
+        <div class="valid-flow reveal">
+          <div class="vf-step">
+            <div class="vf-num">1</div>
+            <div class="vf-title">Espectador introduce código</div>
+            <div class="vf-text">Teclea el código impreso en su entrada</div>
+            <div class="vf-arrow">→</div>
+          </div>
+          <div class="vf-step">
+            <div class="vf-num">2</div>
+            <div class="vf-title">Consulta a Bacantix</div>
+            <div class="vf-text">El sistema pregunta a Bacantix si ese código existe y es válido para este evento</div>
+            <div class="vf-arrow">→</div>
+          </div>
+          <div class="vf-step vf-ok">
+            <div class="vf-num">✓</div>
+            <div class="vf-title">Código válido y no usado</div>
+            <div class="vf-text">Accede a la quiniela. El código queda marcado como utilizado.</div>
+            <div class="vf-arrow">→</div>
+          </div>
+          <div class="vf-step vf-no">
+            <div class="vf-num">✗</div>
+            <div class="vf-title">Código inválido o ya usado</div>
+            <div class="vf-text">No puede participar. Mensaje de error claro.</div>
+          </div>
+        </div>
+
+        <!-- DEMO INTERACTIVA -->
+        <div class="bacantix-title reveal" style="margin-top:28px;">Prueba la validación — códigos de ejemplo</div>
+        <div class="demo-codigo reveal">
+          <div class="demo-cod-header">
+            <div class="demo-cod-title">Corrida de Toros · 26 de Septiembre</div>
+            <div class="demo-cod-sub">Introduce el código de tu entrada para participar</div>
+          </div>
+          <div class="demo-cod-body">
+            <div class="demo-cod-label">Código de entrada</div>
+            <div class="demo-cod-input-wrap">
+              <input class="demo-cod-input" id="codInput" type="text" placeholder="Ej. TOR-2609-A4F7" maxlength="14">
+              <button class="demo-cod-btn" onclick="validarCodigo()">Validar</button>
+            </div>
+            <div class="demo-cod-result" id="codResult"></div>
+            <div class="demo-cod-hint">Códigos de prueba: <strong>TOR-2609-A4F7</strong> (válido) · <strong>TOR-2609-B8K2</strong> (ya usado) · <strong>TOR-2609-XXXX</strong> (no existe)</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="valid-img reveal"><img src="img3.png" alt="Entrada con código QR"></div>
+      </div>
+    </div>
+
+    <!-- ESCENARIOS BACANTIX -->
+    <div class="bacantix-title reveal">Tres escenarios posibles según lo que ofrezca Bacantix</div>
+    <div class="escenarios">
+      <div class="esc-card esc-ideal reveal">
+        <span class="esc-num">Escenario ideal</span>
+        <div class="esc-title">Bacantix tiene API en tiempo real</div>
+        <div class="esc-text">El sistema consulta directamente a Bacantix en el momento exacto en que el espectador introduce su código. Incluye entradas de taquilla vendidas hasta el último minuto.</div>
+        <div class="esc-items">
+          <div><span class="esc-dot"></span>Validación instantánea sin demora</div>
+          <div><span class="esc-dot"></span>Cubre ventas en taquilla en tiempo real</div>
+          <div><span class="esc-dot"></span>Sin intervención manual del empresario</div>
+          <div><span class="esc-dot"></span>Solución más robusta y escalable</div>
+        </div>
+      </div>
+      <div class="esc-card esc-b reveal">
+        <span class="esc-num">Escenario B</span>
+        <div class="esc-title">Sincronización automática periódica</div>
+        <div class="esc-text">Si Bacantix no tiene API pero puede exportar los códigos cada pocos minutos, el sistema se actualiza automáticamente. El margen de desajuste es de 5 a 10 minutos máximo.</div>
+        <div class="esc-items">
+          <div><span class="esc-dot"></span>Actualización cada 5–10 minutos</div>
+          <div><span class="esc-dot"></span>Riesgo mínimo y asumible</div>
+          <div><span class="esc-dot"></span>No requiere desarrollo complejo</div>
+          <div><span class="esc-dot"></span>Válido para la mayoría de situaciones</div>
+        </div>
+      </div>
+      <div class="esc-card esc-c reveal">
+        <span class="esc-num">Escenario C</span>
+        <div class="esc-title">Carga manual antes del evento</div>
+        <div class="esc-text">Si Bacantix solo puede exportar la lista una vez, se carga manualmente antes de la corrida. Las entradas de taquilla vendidas después no quedarían incluidas.</div>
+        <div class="esc-items">
+          <div><span class="esc-dot"></span>Más sencillo técnicamente</div>
+          <div><span class="esc-dot"></span>Requiere coordinación previa</div>
+          <div><span class="esc-dot"></span>Entradas de taquilla no cubiertas</div>
+          <div><span class="esc-dot"></span>Aceptable si la venta en taquilla es baja</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREGUNTAS A BACANTIX -->
+    <div class="bacantix-preguntas reveal">
+      <div class="bp-title">Antes de avanzar: tres preguntas clave para Bacantix</div>
+      <div class="bp-sub">La respuesta a estas preguntas determina qué escenario aplicar y cómo se monta la integración técnica.</div>
+      <div class="bp-items">
+        <div class="bp-item">
+          <div class="bp-q-num">1</div>
+          <div><div class="bp-q-text">¿Pueden generar e imprimir un código alfanumérico único por entrada para un evento concreto?</div><div class="bp-q-why">Sin este código no hay forma de verificar quién tiene entrada. Es el requisito base de todo el sistema.</div></div>
+        </div>
+        <div class="bp-item">
+          <div class="bp-q-num">2</div>
+          <div><div class="bp-q-text">¿Tienen una API o servicio web que permita consultar si un código es válido para un evento en tiempo real?</div><div class="bp-q-why">Esto determina si podemos hacer la validación al instante o necesitamos un sistema de sincronización periódica.</div></div>
+        </div>
+        <div class="bp-item">
+          <div class="bp-q-num">3</div>
+          <div><div class="bp-q-text">¿Esa consulta incluye las entradas vendidas en taquilla hasta el momento de la consulta?</div><div class="bp-q-why">La venta en taquilla puede estar activa hasta el inicio de la corrida. Si la API no la incluye, necesitamos el escenario de sincronización periódica.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 05 QUINIELA DEMO -->
 <section id="quiniela" class="quiniela-sec">
   <div class="container">
     <p class="section-eyebrow reveal">Demo interactiva</p>
     <h2 class="section-title reveal">La quiniela, <em>en vivo</em></h2>
-    <p class="section-lead reveal">Esto es exactamente lo que verá el espectador en su móvil. Pruébala.</p>
-
+    <p class="section-lead reveal">Esto es exactamente lo que verá el espectador en su móvil una vez validado su código de entrada. Pruébala.</p>
     <img src="img4.png" alt="Paseíllo" class="quiniela-hero-img reveal">
-
     <div class="quiniela-layout">
       <div class="q-form-card reveal">
         <div class="q-form-header">
@@ -920,531 +568,88 @@ footer {
           <div class="q-form-header-sub">Participa antes del inicio del festejo</div>
         </div>
         <div class="q-form-body">
-
-          <!-- DATOS -->
           <div>
             <div class="q-block-label">Tus datos</div>
             <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
-              <div>
-                <label class="q-field-label">Nombre y apellidos <span class="q-req">*</span></label>
-                <input class="q-input" type="text" placeholder="Ej. Carmen Álvarez Ruiz">
+              <div><label class="q-field-label">Nombre y apellidos <span class="q-req">*</span></label><input class="q-input" type="text" placeholder="Ej. Carmen Álvarez Ruiz"></div>
+              <div class="q-row">
+                <div><label class="q-field-label">Email <span class="q-req">*</span></label><input class="q-input" type="email" placeholder="tu@email.com"></div>
+                <div><label class="q-field-label">Teléfono <span class="q-req">*</span></label><input class="q-input" type="tel" placeholder="+34 6XX XXX XXX"></div>
               </div>
               <div class="q-row">
-                <div>
-                  <label class="q-field-label">Email <span class="q-req">*</span></label>
-                  <input class="q-input" type="email" placeholder="tu@email.com">
-                </div>
-                <div>
-                  <label class="q-field-label">Teléfono <span class="q-req">*</span></label>
-                  <input class="q-input" type="tel" placeholder="+34 6XX XXX XXX">
-                </div>
-              </div>
-              <div class="q-row">
-                <div>
-                  <label class="q-field-label">Ciudad <span class="q-req">*</span></label>
-                  <input class="q-input" type="text" placeholder="Ej. Sevilla">
-                </div>
-                <div>
-                  <label class="q-field-label">Año de nacimiento <span class="q-req">*</span></label>
-                  <input class="q-input" type="text" placeholder="Ej. 1985">
-                </div>
+                <div><label class="q-field-label">Ciudad <span class="q-req">*</span></label><input class="q-input" type="text" placeholder="Ej. Sevilla"></div>
+                <div><label class="q-field-label">Año de nacimiento <span class="q-req">*</span></label><input class="q-input" type="text" placeholder="Ej. 1985"></div>
               </div>
             </div>
           </div>
-
-          <!-- PERFIL -->
           <div>
             <div class="q-block-label">Tu perfil taurino</div>
-            <div style="display:flex;flex-direction:column;gap:12px;margin-top:10px;">
-              <div>
-                <label class="q-field-label">¿Eres abonado de esta plaza?</label>
-                <div class="q-chips">
-                  <span class="q-chip" onclick="sel(this,'ab')">Sí, soy abonado</span>
-                  <span class="q-chip" onclick="sel(this,'ab')">No soy abonado</span>
-                </div>
-              </div>
-              <div>
-                <label class="q-field-label">¿Cuántas corridas asistes al año?</label>
-                <div class="q-chips">
-                  <span class="q-chip" onclick="sel(this,'cc')">1 a 2</span>
-                  <span class="q-chip" onclick="sel(this,'cc')">3 a 5</span>
-                  <span class="q-chip" onclick="sel(this,'cc')">6 a 10</span>
-                  <span class="q-chip" onclick="sel(this,'cc')">Más de 10</span>
-                </div>
-              </div>
-              <div>
-                <label class="q-field-label">¿Tu torero favorito?</label>
-                <div class="q-chips">
-                  <span class="q-chip" onclick="sel(this,'tf')">Morante</span>
-                  <span class="q-chip" onclick="sel(this,'tf')">Pablo Aguado</span>
-                  <span class="q-chip" onclick="sel(this,'tf')">Roca Rey</span>
-                  <span class="q-chip" onclick="sel(this,'tf')">Otro</span>
-                </div>
-              </div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
+              <div><label class="q-field-label">¿Eres abonado de esta plaza?</label><div class="q-chips"><span class="q-chip" onclick="sel(this,'ab')">Sí, soy abonado</span><span class="q-chip" onclick="sel(this,'ab')">No soy abonado</span></div></div>
+              <div><label class="q-field-label">¿Cuántas corridas asistes al año?</label><div class="q-chips"><span class="q-chip" onclick="sel(this,'cc')">1 a 2</span><span class="q-chip" onclick="sel(this,'cc')">3 a 5</span><span class="q-chip" onclick="sel(this,'cc')">6 a 10</span><span class="q-chip" onclick="sel(this,'cc')">Más de 10</span></div></div>
+              <div><label class="q-field-label">¿Tu torero favorito?</label><div class="q-chips"><span class="q-chip" onclick="sel(this,'tf')">Morante</span><span class="q-chip" onclick="sel(this,'tf')">Pablo Aguado</span><span class="q-chip" onclick="sel(this,'tf')">Roca Rey</span><span class="q-chip" onclick="sel(this,'tf')">Otro</span></div></div>
             </div>
           </div>
-
-          <!-- QUINIELA -->
           <div>
             <div class="q-block-label">La quiniela</div>
-            <div style="display:flex;flex-direction:column;gap:12px;margin-top:10px;">
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
+              <div><label class="q-field-label">¿Cuántas orejas se cortarán en total? <span class="q-req">*</span></label><div class="q-chips"><span class="q-chip" onclick="pts(this,'q1',1)">Ninguna</span><span class="q-chip" onclick="pts(this,'q1',1)">1 oreja</span><span class="q-chip" onclick="pts(this,'q1',1)">2 orejas</span><span class="q-chip" onclick="pts(this,'q1',1)">3 o más</span></div></div>
+              <div><label class="q-field-label">¿Habrá vuelta al ruedo? <span class="q-req">*</span></label><div class="q-chips"><span class="q-chip" onclick="pts(this,'q2',1)">Sí</span><span class="q-chip" onclick="pts(this,'q2',1)">No</span></div></div>
+              <div><label class="q-field-label">¿Saldrá algún torero a hombros? <span class="q-req">*</span></label><div class="q-chips"><span class="q-chip" onclick="pts(this,'q3',1)">Sí, uno</span><span class="q-chip" onclick="pts(this,'q3',1)">Sí, dos o tres</span><span class="q-chip" onclick="pts(this,'q3',1)">No</span></div></div>
+              <div><label class="q-field-label">¿Quién cortará más orejas? <span class="q-req">*</span></label><div class="q-chips"><span class="q-chip" onclick="pts(this,'q4',1)">Morante</span><span class="q-chip" onclick="pts(this,'q4',1)">Pablo Aguado</span><span class="q-chip" onclick="pts(this,'q4',1)">Roca Rey</span><span class="q-chip" onclick="pts(this,'q4',1)">Empate</span></div></div>
+              <div><label class="q-field-label">¿Recibirá aviso algún torero? <span class="q-req">*</span></label><div class="q-chips"><span class="q-chip" onclick="pts(this,'q5',1)">Sí</span><span class="q-chip" onclick="pts(this,'q5',1)">No</span></div></div>
+              <div><label class="q-field-label">¿Cortará Pablo Aguado alguna oreja? <span class="q-req">*</span></label><div class="q-chips"><span class="q-chip" onclick="pts(this,'q6',1)">Sí, una</span><span class="q-chip" onclick="pts(this,'q6',1)">Sí, dos o más</span><span class="q-chip" onclick="pts(this,'q6',1)">No</span></div></div>
               <div>
-                <label class="q-field-label">¿Cuántas orejas se cortarán en total? <span class="q-req">*</span></label>
-                <div class="q-chips">
-                  <span class="q-chip" onclick="pts(this,'q1',1)">Ninguna</span>
-                  <span class="q-chip" onclick="pts(this,'q1',1)">1 oreja</span>
-                  <span class="q-chip" onclick="pts(this,'q1',1)">2 orejas</span>
-                  <span class="q-chip" onclick="pts(this,'q1',1)">3 o más</span>
-                </div>
-              </div>
-              <div>
-                <label class="q-field-label">¿Habrá vuelta al ruedo? <span class="q-req">*</span></label>
-                <div class="q-chips">
-                  <span class="q-chip" onclick="pts(this,'q2',1)">Sí</span>
-                  <span class="q-chip" onclick="pts(this,'q2',1)">No</span>
-                </div>
-              </div>
-              <div>
-                <label class="q-field-label">¿Saldrá algún torero a hombros? <span class="q-req">*</span></label>
-                <div class="q-chips">
-                  <span class="q-chip" onclick="pts(this,'q3',1)">Sí, uno</span>
-                  <span class="q-chip" onclick="pts(this,'q3',1)">Sí, dos o tres</span>
-                  <span class="q-chip" onclick="pts(this,'q3',1)">No</span>
-                </div>
-              </div>
-              <div>
-                <label class="q-field-label">¿Quién cortará más orejas? <span class="q-req">*</span></label>
-                <div class="q-chips">
-                  <span class="q-chip" onclick="pts(this,'q4',1)">Morante</span>
-                  <span class="q-chip" onclick="pts(this,'q4',1)">Pablo Aguado</span>
-                  <span class="q-chip" onclick="pts(this,'q4',1)">Roca Rey</span>
-                  <span class="q-chip" onclick="pts(this,'q4',1)">Empate</span>
-                </div>
-              </div>
-              <div>
-                <label class="q-field-label">¿Recibirá aviso algún torero? <span class="q-req">*</span></label>
-                <div class="q-chips">
-                  <span class="q-chip" onclick="pts(this,'q5',1)">Sí</span>
-                  <span class="q-chip" onclick="pts(this,'q5',1)">No</span>
-                </div>
-              </div>
-              <div>
-                <label class="q-field-label">¿Cortará Pablo Aguado alguna oreja? <span class="q-req">*</span></label>
-                <div class="q-chips">
-                  <span class="q-chip" onclick="pts(this,'q6',1)">Sí, una</span>
-                  <span class="q-chip" onclick="pts(this,'q6',1)">Sí, dos o más</span>
-                  <span class="q-chip" onclick="pts(this,'q6',1)">No</span>
-                </div>
-              </div>
-              <div>
-                <div class="estrella-label">
-                  ★ Pregunta estrella
-                  <span class="pts-badge">3 puntos</span>
-                </div>
+                <div class="estrella-label">★ Pregunta estrella <span class="pts-badge">3 puntos</span></div>
                 <label class="q-field-label">¿Triunfador de la tarde y orejas? <span class="q-req">*</span></label>
-                <div class="q-chips q-estrella">
-                  <span class="q-chip" onclick="pts(this,'qe',3)">Morante · 1</span>
-                  <span class="q-chip" onclick="pts(this,'qe',3)">Morante · 2</span>
-                  <span class="q-chip" onclick="pts(this,'qe',3)">Pablo · 1</span>
-                  <span class="q-chip" onclick="pts(this,'qe',3)">Pablo · 2</span>
-                  <span class="q-chip" onclick="pts(this,'qe',3)">Roca · 1</span>
-                  <span class="q-chip" onclick="pts(this,'qe',3)">Roca · 2</span>
-                  <span class="q-chip" onclick="pts(this,'qe',3)">Ninguno</span>
-                </div>
+                <div class="q-chips q-estrella"><span class="q-chip" onclick="pts(this,'qe',3)">Morante · 1</span><span class="q-chip" onclick="pts(this,'qe',3)">Morante · 2</span><span class="q-chip" onclick="pts(this,'qe',3)">Pablo · 1</span><span class="q-chip" onclick="pts(this,'qe',3)">Pablo · 2</span><span class="q-chip" onclick="pts(this,'qe',3)">Roca · 1</span><span class="q-chip" onclick="pts(this,'qe',3)">Roca · 2</span><span class="q-chip" onclick="pts(this,'qe',3)">Ninguno</span></div>
               </div>
             </div>
           </div>
-
           <button class="q-submit">Enviar mi quiniela →</button>
         </div>
       </div>
-
-      <!-- PANEL LATERAL -->
       <div class="q-score-panel">
         <div class="q-score-card reveal">
           <div class="q-score-title">Tu puntuación actual</div>
           <div class="q-score-num" id="scoreNum">0</div>
           <div class="q-score-of">de 9 puntos posibles</div>
-          <div class="q-score-bar-wrap">
-            <div class="q-score-bar" id="scoreBar"></div>
-          </div>
+          <div class="q-score-bar-wrap"><div class="q-score-bar" id="scoreBar"></div></div>
         </div>
         <div class="q-rules-card reveal">
           <div class="q-rules-title">Sistema de puntuación</div>
-          <div class="q-rule">
-            <span class="q-rule-desc">Preguntas 1–6</span>
-            <span class="q-rule-val">1 pt cada una</span>
-          </div>
-          <div class="q-rule">
-            <span class="q-rule-desc">Pregunta estrella ★</span>
-            <span class="q-rule-val">3 puntos</span>
-          </div>
-          <div class="q-rule">
-            <span class="q-rule-desc">Máximo posible</span>
-            <span class="q-rule-val">9 puntos</span>
-          </div>
-          <div class="q-rule">
-            <span class="q-rule-desc">En caso de empate</span>
-            <span class="q-rule-val">Gana el primero</span>
-          </div>
+          <div class="q-rule"><span class="q-rule-desc">Preguntas 1–6</span><span class="q-rule-val">1 pt cada una</span></div>
+          <div class="q-rule"><span class="q-rule-desc">Pregunta estrella ★</span><span class="q-rule-val">3 puntos</span></div>
+          <div class="q-rule"><span class="q-rule-desc">Máximo posible</span><span class="q-rule-val">9 puntos</span></div>
+          <div class="q-rule"><span class="q-rule-desc">En caso de empate</span><span class="q-rule-val">Gana el primero</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 05 CRM -->
-<section id="crm" class="crm-sec">
-  <div class="crm-bg"></div>
-  <div class="container crm-content">
-    <p class="section-eyebrow reveal">CRM y segmentación</p>
-    <h2 class="section-title reveal">Cada espectador, <em>un perfil</em></h2>
-    <p class="section-lead reveal">Cada participación alimenta automáticamente el CRM con datos reales. El sistema crea y etiqueta perfiles sin intervención manual.</p>
-
-    <div class="seg-grid">
-      <div class="seg-card sc-amber reveal">
-        <span class="seg-tag">Abonado</span>
-        <div class="seg-name">Fiel de temporada</div>
-        <div class="seg-trigger">Abonado + asiste más de 6 corridas al año</div>
-        <div class="seg-actions">
-          <div><span class="seg-dot"></span>Comunicación preferente y anticipada</div>
-          <div><span class="seg-dot"></span>Preventa exclusiva de próximas corridas</div>
-          <div><span class="seg-dot"></span>Trato VIP en premios y reconocimientos</div>
-        </div>
-      </div>
-      <div class="seg-card sc-verde reveal">
-        <span class="seg-tag">Aficionado activo</span>
-        <div class="seg-name">Asiduo sin abono</div>
-        <div class="seg-trigger">No abonado + asiste 3 o más corridas al año</div>
-        <div class="seg-actions">
-          <div><span class="seg-dot"></span>Oferta personalizada de abono de temporada</div>
-          <div><span class="seg-dot"></span>Pack de entradas anticipadas</div>
-          <div><span class="seg-dot"></span>Contenido taurino de valor regular</div>
-        </div>
-      </div>
-      <div class="seg-card sc-gris reveal">
-        <span class="seg-tag">Ocasional</span>
-        <div class="seg-name">Espectador esporádico</div>
-        <div class="seg-trigger">No abonado + asiste 1 a 2 corridas al año</div>
-        <div class="seg-actions">
-          <div><span class="seg-dot"></span>Comunicación en fechas y ferias clave</div>
-          <div><span class="seg-dot"></span>Corridas especiales y carteles de gala</div>
-          <div><span class="seg-dot"></span>Nurturing progresivo hacia mayor fidelidad</div>
-        </div>
-      </div>
-      <div class="seg-card sc-coral reveal">
-        <span class="seg-tag">Fan de torero</span>
-        <div class="seg-name">Seguidor específico</div>
-        <div class="seg-trigger">Indica torero favorito en el formulario</div>
-        <div class="seg-actions">
-          <div><span class="seg-dot"></span>Alerta cuando ese torero actúa en plaza</div>
-          <div><span class="seg-dot"></span>Contenido específico del torero</div>
-          <div><span class="seg-dot"></span>Entrada anticipada a su corrida</div>
-        </div>
-      </div>
-      <div class="seg-card sc-gris full reveal">
-        <span class="seg-tag">Segmento geográfico</span>
-        <div class="seg-name">Por ciudad de residencia</div>
-        <div class="seg-trigger">Campo ciudad del formulario → etiqueta automática en el CRM</div>
-        <div class="seg-actions" style="display:flex;gap:32px;flex-wrap:wrap;">
-          <div>
-            <div><span class="seg-dot"></span>Local → comunicación más frecuente y directa</div>
-            <div><span class="seg-dot"></span>Foráneo → activación en fechas de feria grandes</div>
-          </div>
-          <div>
-            <div><span class="seg-dot"></span>Análisis de procedencia del público por corrida</div>
-            <div><span class="seg-dot"></span>Planificación de campañas por zona geográfica</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="crm-flow reveal">
-      <div class="crm-flow-step">
-        <div class="cfs-num">01 · ENVÍO</div>
-        <div class="cfs-title">Formulario enviado</div>
-        <div class="cfs-text">Contacto creado en GHL con todos los campos y timestamp de participación</div>
-      </div>
-      <div class="crm-flow-step">
-        <div class="cfs-num">02 · ETIQUETADO</div>
-        <div class="cfs-title">Automatización activa</div>
-        <div class="cfs-text">GHL aplica etiquetas: abonado, frecuencia, torero favorito, ciudad</div>
-      </div>
-      <div class="crm-flow-step">
-        <div class="cfs-num">03 · SEGMENTO</div>
-        <div class="cfs-title">Perfil asignado</div>
-        <div class="cfs-text">El contacto entra en su segmento y pipeline correspondiente de forma automática</div>
-      </div>
-      <div class="crm-flow-step">
-        <div class="cfs-num">04 · ACCIÓN</div>
-        <div class="cfs-title">Comunicación activada</div>
-        <div class="cfs-text">Se lanza la secuencia de comunicación específica para ese perfil desde el primer registro</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 06 ARQUITECTURA -->
-<section id="arquitectura" class="arq-sec">
+<!-- NOTA CRM -->
+<section class="nota-crm">
   <div class="container">
-    <p class="section-eyebrow reveal">Arquitectura del sistema</p>
-    <h2 class="section-title reveal">El sistema, <em>capa a capa</em></h2>
-    <p class="section-lead reveal">Dos opciones de implementación técnica. Ambas convergen en GoHighLevel como CRM central. La diferencia está en las herramientas de cara al espectador.</p>
-
-    <div class="arq-tabs reveal">
-      <button class="arq-tab active" onclick="showTab('completo')">Vista completa</button>
-      <button class="arq-tab" onclick="showTab('opcionA')">Opción A · Todo en GHL</button>
-      <button class="arq-tab" onclick="showTab('opcionB')">Opción B · GHL como CRM</button>
-    </div>
-
-    <!-- PANEL: VISTA COMPLETA -->
-    <div class="arq-panel active" id="tab-completo">
-      <div class="arq-diagram reveal">
-
-        <div class="arq-layer">
-          <div class="arq-layer-label">① Entrada física</div>
-          <div class="arq-row">
-            <div class="arq-box ab-amber">
-              <div class="arq-box-title">Entrada impresa</div>
-              <div class="arq-box-sub">QR único por corrida</div>
-            </div>
-            <div style="display:flex;align-items:center;color:var(--tierra);opacity:0.4;padding:0 4px;">→</div>
-            <div class="arq-box ab-amber">
-              <div class="arq-box-title">Código QR</div>
-              <div class="arq-box-sub">URL con ID de corrida · Carteles · Zonas de paso</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="arq-arrow">↓</div>
-
-        <div class="arq-layer">
-          <div class="arq-layer-label">② Landing page (por corrida)</div>
-          <div class="arq-row">
-            <div class="arq-box ab-teal">
-              <div class="arq-box-title">Landing page del festejo</div>
-              <div class="arq-box-sub">Cartel · Toreros · Reglas · Consentimiento RGPD · Ventana de participación activa</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="arq-arrow">↓</div>
-
-        <div class="arq-layer">
-          <div class="arq-layer-label">③ Formulario de participación</div>
-          <div class="arq-row">
-            <div class="arq-box ab-teal">
-              <div class="arq-box-title">Datos personales</div>
-              <div class="arq-box-sub">Nombre · Email · Teléfono · Ciudad · Año de nacimiento</div>
-            </div>
-            <div class="arq-box ab-teal">
-              <div class="arq-box-title">Preguntas quiniela</div>
-              <div class="arq-box-sub">Orejas · Vuelta · Puerta grande · Estrella ×3</div>
-            </div>
-            <div class="arq-box ab-teal">
-              <div class="arq-box-title">Perfil espectador</div>
-              <div class="arq-box-sub">Abonado · Frecuencia · Torero favorito</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="arq-arrow">↓</div>
-
-        <div class="arq-layer">
-          <div class="arq-layer-label">④ Herramientas — Opción A (todo en GHL) · Opción B (GHL como CRM)</div>
-          <div class="arq-two-col">
-            <div>
-              <div class="opt-header opt-a-h">Opción A · Todo en GoHighLevel</div>
-              <div style="display:flex;flex-direction:column;gap:6px;">
-                <div class="arq-box ab-verde">
-                  <div class="arq-box-title">Formulario GHL nativo</div>
-                  <div class="arq-box-sub">Sin integraciones externas</div>
-                </div>
-                <div class="arq-box ab-verde">
-                  <div class="arq-box-title">Landing · GHL Page Builder</div>
-                  <div class="arq-box-sub">Diseño dentro de la plataforma</div>
-                </div>
-                <div class="arq-box ab-verde">
-                  <div class="arq-box-title">QR nativo de GHL</div>
-                  <div class="arq-box-sub">Generado y gestionado desde GHL</div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div class="opt-header opt-b-h">Opción B · GHL solo como CRM</div>
-              <div style="display:flex;flex-direction:column;gap:6px;">
-                <div class="arq-box ab-purple">
-                  <div class="arq-box-title">Formulario · Typeform</div>
-                  <div class="arq-box-sub">Mejor UX en móvil · Conversacional</div>
-                </div>
-                <div class="arq-box ab-purple">
-                  <div class="arq-box-title">Landing · Webflow o HTML</div>
-                  <div class="arq-box-sub">Mayor control de diseño</div>
-                </div>
-                <div class="arq-box ab-purple">
-                  <div class="arq-box-title">QR · QR.io o Beaconstac</div>
-                  <div class="arq-box-sub">QR dinámico con estadísticas de escaneo</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="arq-merge">
-          <div class="arq-merge-line"></div>
-          <span style="font-size:11px;white-space:nowrap;">ambas opciones convergen en GHL</span>
-          <div class="arq-merge-line"></div>
-        </div>
-        <div class="arq-arrow" style="margin-top:-8px;">↓</div>
-
-        <div class="arq-layer">
-          <div class="arq-layer-label">⑤ CRM y automatización · GoHighLevel</div>
-          <div class="arq-row">
-            <div class="arq-box ab-coral">
-              <div class="arq-box-title">GoHighLevel — CRM central</div>
-              <div class="arq-box-sub">Contactos · Pipelines · Automatizaciones · Historial por espectador</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="arq-arrow">↓</div>
-
-        <div class="arq-layer">
-          <div class="arq-layer-label">⑥ Automatizaciones y comunicación</div>
-          <div class="arq-row">
-            <div class="arq-box ab-coral">
-              <div class="arq-box-title">Automatización entrada</div>
-              <div class="arq-box-sub">Email/SMS de confirmación inmediata</div>
-            </div>
-            <div class="arq-box ab-coral">
-              <div class="arq-box-title">Resolución quiniela</div>
-              <div class="arq-box-sub">Resultado · Ganador · Premio</div>
-            </div>
-            <div class="arq-box ab-coral">
-              <div class="arq-box-title">Segmentación</div>
-              <div class="arq-box-sub">Abonado · Activo · Ocasional · Fan</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="arq-arrow">↓</div>
-
-        <div class="arq-layer">
-          <div class="arq-row">
-            <div class="arq-box ab-gray">
-              <div class="arq-box-title">Email/SMS resultado</div>
-              <div class="arq-box-sub">A ganadores y participantes</div>
-            </div>
-            <div class="arq-box ab-gray">
-              <div class="arq-box-title">Ranking de temporada</div>
-              <div class="arq-box-sub">Acumulado corrida a corrida</div>
-            </div>
-            <div class="arq-box ab-gray">
-              <div class="arq-box-title">Campañas fidelización</div>
-              <div class="arq-box-sub">Segmentadas por perfil</div>
-            </div>
-          </div>
-        </div>
-
+    <div class="nota-inner reveal">
+      <div class="nota-icon">💡</div>
+      <div>
+        <div class="nota-title">Nota sobre los datos recogidos</div>
+        <div class="nota-text">Cada quiniela enviada contiene información valiosa: nombre, email, teléfono, ciudad, edad y perfil taurino del espectador. En la configuración actual, estos datos se almacenan pero no se conectan a un CRM activo. Activar esa conexión en cualquier momento futuro permitiría construir automáticamente perfiles de espectador, segmentar la comunicación y lanzar campañas de fidelización. Sin esa conexión, el dato existe pero no trabaja para el negocio.</div>
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- PANEL: OPCIÓN A -->
-    <div class="arq-panel" id="tab-opcionA">
-      <div class="arq-diagram reveal">
-        <div style="margin-bottom:16px;">
-          <div class="opt-header opt-a-h">Opción A · Todo en GoHighLevel</div>
-          <p style="font-size:13px;color:var(--tierra);margin-top:8px;line-height:1.6;">La solución más rápida de arrancar. Todo vive dentro de GHL: formulario, landing, QR y CRM. Sin integraciones externas, sin Zapier. El dato fluye de forma nativa de un punto al siguiente.</p>
-        </div>
+<!-- 06 FLUJO DEMO COMPLETO -->
+<section id="flujo" class="flujo-sec">
+  <div class="container">
+    <p class="section-eyebrow reveal">Demo paso a paso</p>
+    <h2 class="section-title reveal">El flujo completo, <em>desde el principio</em></h2>
+    <p class="section-lead reveal">Recorre cada momento del sistema como si fueras el espectador — y después, como si fueras el empresario cerrando la quiniela.</p>
 
-        <div class="arq-layer">
-          <div class="arq-layer-label">Entrada y captación</div>
-          <div class="arq-row">
-            <div class="arq-box ab-amber"><div class="arq-box-title">Entrada impresa</div><div class="arq-box-sub">QR generado por GHL</div></div>
-            <div style="display:flex;align-items:center;color:var(--tierra);opacity:0.4;padding:0 4px;">→</div>
-            <div class="arq-box ab-amber"><div class="arq-box-title">Carteles y zonas de paso</div><div class="arq-box-sub">Mismo QR dinámico</div></div>
-          </div>
-        </div>
-        <div class="arq-arrow">↓</div>
-        <div class="arq-layer">
-          <div class="arq-layer-label">Landing y formulario — GHL Page Builder</div>
-          <div class="arq-row">
-            <div class="arq-box ab-verde"><div class="arq-box-title">Landing page del festejo</div><div class="arq-box-sub">Construida en GHL · Cartel · Reglas · RGPD</div></div>
-            <div style="display:flex;align-items:center;color:var(--tierra);opacity:0.4;padding:0 4px;">→</div>
-            <div class="arq-box ab-verde"><div class="arq-box-title">Formulario GHL nativo</div><div class="arq-box-sub">Datos · Perfil · Quiniela · Envío directo al CRM</div></div>
-          </div>
-        </div>
-        <div class="arq-arrow">↓</div>
-        <div class="arq-layer">
-          <div class="arq-layer-label">CRM y automatización — todo en GHL</div>
-          <div class="arq-row">
-            <div class="arq-box ab-coral"><div class="arq-box-title">Contacto creado automáticamente</div><div class="arq-box-sub">Etiquetado · Segmentado · Pipeline asignado</div></div>
-            <div class="arq-box ab-coral"><div class="arq-box-title">Automatizaciones nativas</div><div class="arq-box-sub">Confirmación · Resultado · Fidelización</div></div>
-          </div>
-        </div>
-        <div style="margin-top:20px;padding:14px 16px;background:#E1F5EE;border-radius:10px;border:1px solid #1D9E75;">
-          <div style="font-size:12px;font-weight:700;color:#04342C;margin-bottom:6px;">Ventajas de la Opción A</div>
-          <div style="font-size:12px;color:#085041;line-height:1.8;">
-            · Sin integraciones ni Zapier — todo es nativo<br>
-            · Más rápida de montar — días, no semanas<br>
-            · Un solo proveedor y una sola factura<br>
-            · Ideal para arrancar y validar el sistema
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PANEL: OPCIÓN B -->
-    <div class="arq-panel" id="tab-opcionB">
-      <div class="arq-diagram reveal">
-        <div style="margin-bottom:16px;">
-          <div class="opt-header opt-b-h">Opción B · GHL solo como CRM</div>
-          <p style="font-size:13px;color:var(--tierra);margin-top:8px;line-height:1.6;">Las herramientas de cara al espectador son mejores en diseño y UX. GHL recibe los datos vía Zapier o webhook y actúa como CRM central. Más flexible, algo más compleja de montar.</p>
-        </div>
-
-        <div class="arq-layer">
-          <div class="arq-layer-label">Entrada y captación</div>
-          <div class="arq-row">
-            <div class="arq-box ab-amber"><div class="arq-box-title">Entrada impresa</div><div class="arq-box-sub">QR con Beaconstac o QR.io</div></div>
-            <div style="display:flex;align-items:center;color:var(--tierra);opacity:0.4;padding:0 4px;">→</div>
-            <div class="arq-box ab-amber"><div class="arq-box-title">Carteles y zonas de paso</div><div class="arq-box-sub">QR dinámico con estadísticas de escaneo</div></div>
-          </div>
-        </div>
-        <div class="arq-arrow">↓</div>
-        <div class="arq-layer">
-          <div class="arq-layer-label">Landing y formulario — herramientas especializadas</div>
-          <div class="arq-row">
-            <div class="arq-box ab-purple"><div class="arq-box-title">Landing · Webflow o HTML</div><div class="arq-box-sub">Mayor control de diseño · Cartel · Reglas · RGPD</div></div>
-            <div style="display:flex;align-items:center;color:var(--tierra);opacity:0.4;padding:0 4px;">→</div>
-            <div class="arq-box ab-purple"><div class="arq-box-title">Formulario · Typeform</div><div class="arq-box-sub">Mejor UX móvil · Conversacional · Más tasa de completado</div></div>
-          </div>
-        </div>
-        <div class="arq-arrow">↓</div>
-        <div class="arq-layer">
-          <div class="arq-layer-label">Conexión a GHL vía Zapier o webhook</div>
-          <div class="arq-row">
-            <div class="arq-box ab-gray"><div class="arq-box-title">Zapier / Webhook</div><div class="arq-box-sub">Cada envío de Typeform crea el contacto en GHL automáticamente</div></div>
-          </div>
-        </div>
-        <div class="arq-arrow">↓</div>
-        <div class="arq-layer">
-          <div class="arq-layer-label">CRM y automatización — GoHighLevel</div>
-          <div class="arq-row">
-            <div class="arq-box ab-coral"><div class="arq-box-title">Contacto creado automáticamente</div><div class="arq-box-sub">Etiquetado · Segmentado · Pipeline asignado</div></div>
-            <div class="arq-box ab-coral"><div class="arq-box-title">Automatizaciones nativas GHL</div><div class="arq-box-sub">Confirmación · Resultado · Fidelización</div></div>
-          </div>
-        </div>
-        <div style="margin-top:20px;padding:14px 16px;background:#EEEDFE;border-radius:10px;border:1px solid #7F77DD;">
-          <div style="font-size:12px;font-weight:700;color:#26215C;margin-bottom:6px;">Ventajas de la Opción B</div>
-          <div style="font-size:12px;color:#3C3489;line-height:1.8;">
-            · Formulario Typeform: mejor experiencia en móvil y mayor tasa de completado<br>
-            · QR con estadísticas: sabes cuántos escaneos hay antes de que participen<br>
-            · Landing con más libertad de diseño e imagen de marca<br>
-            · Ideal cuando la experiencia del espectador es prioritaria
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="flujo-timeline reveal" id="flujoTimeline"></div>
+    <div class="flujo-panels" id="flujioPanels"></div>
 
   </div>
 </section>
@@ -1455,47 +660,34 @@ footer {
     <p class="section-eyebrow reveal">Implementación</p>
     <h2 class="section-title reveal">Hoja de ruta <em>por fases</em></h2>
     <p class="section-lead reveal">Un despliegue progresivo que permite arrancar con la primera corrida y crecer de forma controlada.</p>
-
     <div class="fases">
       <div class="fase reveal">
-        <div class="fase-header">
-          <div class="fase-num">Fase 01</div>
-          <div class="fase-titulo">Arranque</div>
-          <div class="fase-tiempo">Semanas 1–3</div>
-        </div>
+        <div class="fase-header"><div class="fase-num">Fase 01</div><div class="fase-titulo">Arranque</div><div class="fase-tiempo">Semanas 1–3</div></div>
         <div class="fase-body">
-          <div class="fase-item"><div class="fase-dot"></div>Configuración de GoHighLevel como CRM central</div>
-          <div class="fase-item"><div class="fase-dot"></div>Creación de la landing page y formulario de la primera corrida</div>
+          <div class="fase-item"><div class="fase-dot"></div>Consulta técnica a Bacantix — validar escenario de integración</div>
+          <div class="fase-item"><div class="fase-dot"></div>Configuración del sistema de validación de códigos</div>
+          <div class="fase-item"><div class="fase-dot"></div>Creación de la landing y formulario de la primera corrida</div>
           <div class="fase-item"><div class="fase-dot"></div>Generación del QR e integración en la entrada impresa</div>
-          <div class="fase-item"><div class="fase-dot"></div>Automatización de confirmación y resultado</div>
           <div class="fase-item"><div class="fase-dot"></div>Primera corrida con el sistema activo</div>
         </div>
       </div>
       <div class="fase reveal">
-        <div class="fase-header">
-          <div class="fase-num">Fase 02</div>
-          <div class="fase-titulo">Consolidación</div>
-          <div class="fase-tiempo">Meses 2–4</div>
-        </div>
+        <div class="fase-header"><div class="fase-num">Fase 02</div><div class="fase-titulo">Consolidación</div><div class="fase-tiempo">Meses 2–4</div></div>
         <div class="fase-body">
           <div class="fase-item"><div class="fase-dot"></div>Refinamiento del formulario con los datos de las primeras corridas</div>
-          <div class="fase-item"><div class="fase-dot"></div>Activación de segmentos y primeras campañas de fidelización</div>
-          <div class="fase-item"><div class="fase-dot"></div>QR en carteles exteriores y zonas de paso</div>
+          <div class="fase-item"><div class="fase-dot"></div>QR en carteles exteriores y zonas de paso de la plaza</div>
+          <div class="fase-item"><div class="fase-dot"></div>Automatización del cálculo de ganadores</div>
           <div class="fase-item"><div class="fase-dot"></div>Ranking acumulado de temporada</div>
-          <div class="fase-item"><div class="fase-dot"></div>Primeros análisis de perfil de público</div>
+          <div class="fase-item"><div class="fase-dot"></div>Primeros análisis de participación por corrida</div>
         </div>
       </div>
       <div class="fase reveal">
-        <div class="fase-header">
-          <div class="fase-num">Fase 03</div>
-          <div class="fase-titulo">Escala</div>
-          <div class="fase-tiempo">A partir del mes 5</div>
-        </div>
+        <div class="fase-header"><div class="fase-num">Fase 03</div><div class="fase-titulo">Escala</div><div class="fase-tiempo">A partir del mes 5</div></div>
         <div class="fase-body">
-          <div class="fase-item"><div class="fase-dot"></div>Automatización completa de resolución de quiniela</div>
-          <div class="fase-item"><div class="fase-dot"></div>Campañas segmentadas por torero, ciudad y perfil</div>
-          <div class="fase-item"><div class="fase-dot"></div>Panel de análisis de temporada completa</div>
-          <div class="fase-item"><div class="fase-dot"></div>Preventa anticipada a segmentos prioritarios</div>
+          <div class="fase-item"><div class="fase-dot"></div>Activación del CRM con los datos ya recogidos</div>
+          <div class="fase-item"><div class="fase-dot"></div>Segmentación automática de espectadores</div>
+          <div class="fase-item"><div class="fase-dot"></div>Campañas de comunicación por perfil y ciudad</div>
+          <div class="fase-item"><div class="fase-dot"></div>Preventa anticipada a espectadores recurrentes</div>
           <div class="fase-item"><div class="fase-dot"></div>Extensión a otras plazas si aplica</div>
         </div>
       </div>
@@ -1506,53 +698,257 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Quiniela <span>Taurina</span></div>
-  <div class="footer-text">Sistema de captación, quiniela y CRM para empresarios taurinos</div>
+  <div class="footer-text">Sistema de quiniela con validación de entrada para empresarios taurinos</div>
 </footer>
 
 <script>
-// TABS ARQUITECTURA
-function showTab(id) {
-  document.querySelectorAll('.arq-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.arq-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  event.target.classList.add('active');
-}
+// ── NAV ──────────────────────────────────────────────
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
 
-// NAV MOBILE
-function toggleMenu() {
-  document.getElementById('mobileMenu').classList.toggle('open');
-}
-function closeMenu() {
-  document.getElementById('mobileMenu').classList.remove('open');
-}
+// ── REVEAL ───────────────────────────────────────────
+const revealEls=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*60);obs.unobserve(e.target);}});
+},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+revealEls.forEach(el=>obs.observe(el));
 
-// SCROLL REVEAL
-const revealEls = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 60);
-      observer.unobserve(entry.target);
-    }
+// ── QUINIELA PUNTUACIÓN ───────────────────────────────
+const scores={};
+function pts(el,grupo,puntos){el.closest('.q-chips').querySelectorAll('.q-chip').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');scores[grupo]=puntos;const total=Object.values(scores).reduce((a,b)=>a+b,0);document.getElementById('scoreNum').textContent=total;document.getElementById('scoreBar').style.width=(total/9*100)+'%';}
+function sel(el,grupo){el.closest('.q-chips').querySelectorAll('.q-chip').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');}
+
+// ── VALIDACIÓN CÓDIGO ─────────────────────────────────
+const codigosValidos={'TOR-2609-A4F7':{valido:true,usado:false,nombre:'Entrada Tendido 7 · Fila 12 · Asiento 04'},'TOR-2609-B8K2':{valido:true,usado:true},'TOR-2609-C3M9':{valido:true,usado:false,nombre:'Entrada Tendido 3 · Fila 5 · Asiento 11'}};
+function validarCodigo(){
+  const cod=document.getElementById('codInput').value.trim().toUpperCase();
+  const res=document.getElementById('codResult');
+  res.style.display='block';
+  if(!cod){res.className='demo-cod-result result-no';res.innerHTML='Por favor introduce un código de entrada.';return;}
+  const data=codigosValidos[cod];
+  if(!data){res.className='demo-cod-result result-no';res.innerHTML='<strong>✗ Código no válido</strong><br>Este código no corresponde a ninguna entrada de este evento. Comprueba que lo has escrito correctamente.';}
+  else if(data.usado){res.className='demo-cod-result result-used';res.innerHTML='<strong>⚠ Código ya utilizado</strong><br>Este código ya fue empleado para participar en la quiniela. Cada entrada solo permite una participación.';}
+  else{res.className='demo-cod-result result-ok';res.innerHTML='<strong>✓ Código válido — '+data.nombre+'</strong><br>Tu entrada está confirmada. A continuación puedes rellenar tu quiniela.';}
+}
+document.getElementById('codInput').addEventListener('keypress',function(e){if(e.key==='Enter')validarCodigo();});
+
+// ── FLUJO DEMO PASO A PASO ────────────────────────────
+const pasos=[
+  {
+    label:'La entrada',
+    eyebrow:'Paso 1 · Antes de llegar',
+    title:'La entrada con su <em>llave única</em>',
+    body:'Bacantix genera cada entrada con dos elementos: el código QR que lleva a la página de la quiniela, y un código alfanumérico personal que identifica de forma única esa entrada. Nadie más puede usar ese código.',
+    tags:['Generado por Bacantix','Único por entrada','Impreso en papel'],
+    visual:'entrada'
+  },
+  {
+    label:'El QR',
+    eyebrow:'Paso 2 · En la plaza',
+    title:'Escanea el QR, <em>entra a la quiniela</em>',
+    body:'El espectador escanea el código QR de su entrada — o uno de los carteles a la entrada de la plaza. Llega a la página del festejo con toda la información: cartel, toreros y reglas de la quiniela.',
+    tags:['En la entrada impresa','En carteles exteriores','En zonas de paso'],
+    visual:'qr'
+  },
+  {
+    label:'Validación',
+    eyebrow:'Paso 3 · El portero digital',
+    title:'Introduce tu código, <em>el sistema comprueba</em>',
+    body:'Antes de ver la quiniela, el espectador introduce el código de su entrada. El sistema consulta a Bacantix en tiempo real: ¿existe este código? ¿ya fue usado? Solo si las dos respuestas son correctas, accede.',
+    tags:['Consulta en tiempo real','Cubre ventas en taquilla','Un uso por entrada'],
+    visual:'validacion'
+  },
+  {
+    label:'La quiniela',
+    eyebrow:'Paso 4 · Antes del paseíllo',
+    title:'Rellena tus <em>predicciones</em>',
+    body:'El espectador completa sus datos y sus predicciones para la corrida. Todo diseñado para hacerse en menos de 2 minutos desde el móvil. La quiniela se cierra al inicio del paseíllo.',
+    tags:['Menos de 2 minutos','Optimizado para móvil','Cierre automático al inicio'],
+    visual:'quiniela'
+  },
+  {
+    label:'Confirmación',
+    eyebrow:'Paso 5 · Enviado',
+    title:'Quiniela enviada, <em>a esperar el resultado</em>',
+    body:'Tras enviar, el espectador recibe una confirmación en pantalla con sus predicciones guardadas y un mensaje indicando que el resultado se publicará al finalizar la corrida.',
+    tags:['Confirmación inmediata','Predicciones guardadas','Pendiente de resultado'],
+    visual:'confirmacion'
+  },
+  {
+    label:'Resultado',
+    eyebrow:'Paso 6 · Tras la corrida',
+    title:'El empresario introduce <em>el resultado real</em>',
+    body:'Al terminar la corrida, el empresario introduce en el panel lo que ocurrió: orejas cortadas, vueltas al ruedo, quién salió a hombros. El sistema compara automáticamente con todas las predicciones.',
+    tags:['Panel de administración','Tarda menos de 2 minutos','Dispara el cálculo automático'],
+    visual:'resultado'
+  },
+  {
+    label:'El ganador',
+    eyebrow:'Paso 7 · El reconocimiento',
+    title:'El sistema encuentra <em>al ganador</em>',
+    body:'El sistema calcula la puntuación de cada participante y determina el ganador. En caso de empate, gana quien antes envió su quiniela. El ganador recibe su reconocimiento en pantalla.',
+    tags:['Cálculo automático','Desempate por timestamp','Reconocimiento personalizado'],
+    visual:'ganador'
+  }
+];
+
+function renderFlujo(){
+  const tl=document.getElementById('flujoTimeline');
+  const panels=document.getElementById('flujioPanels');
+  tl.innerHTML=''; panels.innerHTML='';
+  pasos.forEach((p,i)=>{
+    const tab=document.createElement('div');
+    tab.className='ft-step'+(i===0?' active':'');
+    tab.textContent=p.label;
+    tab.onclick=()=>goStep(i);
+    tl.appendChild(tab);
+
+    const panel=document.createElement('div');
+    panel.className='flujo-panel'+(i===0?' active':'');
+    panel.id='fp-'+i;
+    panel.innerHTML=`
+      <div class="fp-text">
+        <div class="fp-eyebrow">${p.eyebrow}</div>
+        <h3 class="fp-title">${p.title}</h3>
+        <p class="fp-body">${p.body}</p>
+        <div class="fp-tags">${p.tags.map(t=>`<span class="fp-tag">${t}</span>`).join('')}</div>
+        <div class="fp-nav">
+          ${i>0?`<button class="fp-btn fp-btn-prev" onclick="goStep(${i-1})">← ${pasos[i-1].label}</button>`:''}
+          ${i<pasos.length-1?`<button class="fp-btn fp-btn-next" onclick="goStep(${i+1})">${pasos[i+1].label} →</button>`:''}
+        </div>
+      </div>
+      <div class="fp-visual">${getVisual(p.visual)}</div>
+    `;
+    panels.appendChild(panel);
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-revealEls.forEach(el => observer.observe(el));
+}
 
-// QUINIELA PUNTUACION
-const scores = {};
-function pts(el, grupo, puntos) {
-  el.closest('.q-chips').querySelectorAll('.q-chip').forEach(c => c.classList.remove('sel'));
-  el.classList.add('sel');
-  scores[grupo] = puntos;
-  const total = Object.values(scores).reduce((a, b) => a + b, 0);
-  document.getElementById('scoreNum').textContent = total;
-  document.getElementById('scoreBar').style.width = (total / 9 * 100) + '%';
+function goStep(i){
+  document.querySelectorAll('.ft-step').forEach((t,j)=>t.classList.toggle('active',i===j));
+  document.querySelectorAll('.flujo-panel').forEach((p,j)=>p.classList.toggle('active',i===j));
+  document.getElementById('flujo').scrollIntoView({behavior:'smooth',block:'start'});
 }
-function sel(el, grupo) {
-  el.closest('.q-chips').querySelectorAll('.q-chip').forEach(c => c.classList.remove('sel'));
-  el.classList.add('sel');
+
+function getVisual(type){
+  switch(type){
+    case 'entrada': return `
+      <div style="padding:20px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:12px;">Ejemplo de entrada</div>
+        <div class="mockup-entrada">
+          <div class="me-evento">Empresa Taurina · Sevilla</div>
+          <div class="me-titulo">Gran Corrida de la Feria</div>
+          <div class="me-fecha">Sábado, 26 de Septiembre · 18:00h</div>
+          <div class="me-datos">
+            <div class="me-dato"><div class="me-dato-label">Tendido</div><div class="me-dato-val">7</div></div>
+            <div class="me-dato"><div class="me-dato-label">Fila</div><div class="me-dato-val">12</div></div>
+            <div class="me-dato"><div class="me-dato-label">Asiento</div><div class="me-dato-val">04</div></div>
+            <div class="me-dato"><div class="me-dato-label">Precio</div><div class="me-dato-val">85 €</div></div>
+          </div>
+          <div class="me-codigos">
+            <div class="me-qr">QR<br>QUINIELA</div>
+            <div class="me-cod-info">
+              <div class="me-cod-label">Tu código de entrada</div>
+              <div class="me-cod-val">TOR-2609-A4F7</div>
+              <div class="me-cod-hint">Introdúcelo para participar en la quiniela</div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    case 'qr': return `
+      <img src="img3.png" alt="Entrada con QR" style="height:200px;">
+      <div class="fp-visual-body">
+        <div style="font-size:13px;color:var(--tierra);line-height:1.6;">El QR lleva a la página del festejo. Al escanearlo el espectador ve el cartel de la corrida y el botón para participar en la quiniela.</div>
+      </div>`;
+    case 'validacion': return `
+      <div class="fp-visual-body">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:12px;">Prueba los tres casos</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;">
+          <div style="padding:8px 12px;background:#E1F5EE;border-radius:6px;border:1px solid #1D9E75;font-size:12px;color:#04342C;cursor:pointer;" onclick="document.getElementById('codInput2').value='TOR-2609-A4F7';validarCodigo2()"><strong>TOR-2609-A4F7</strong> — Entrada válida, no usada</div>
+          <div style="padding:8px 12px;background:#FAEEDA;border-radius:6px;border:1px solid #BA7517;font-size:12px;color:#412402;cursor:pointer;" onclick="document.getElementById('codInput2').value='TOR-2609-B8K2';validarCodigo2()"><strong>TOR-2609-B8K2</strong> — Entrada válida, ya usada</div>
+          <div style="padding:8px 12px;background:#FAECE7;border-radius:6px;border:1px solid #D85A30;font-size:12px;color:#4A1B0C;cursor:pointer;" onclick="document.getElementById('codInput2').value='TOR-2609-XXXX';validarCodigo2()"><strong>TOR-2609-XXXX</strong> — Código inexistente</div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <input id="codInput2" class="q-input" style="letter-spacing:.1em;font-weight:600;font-size:13px;" placeholder="O escribe uno tú mismo">
+          <button class="demo-cod-btn" style="white-space:nowrap;" onclick="validarCodigo2()">Validar</button>
+        </div>
+        <div id="codResult2" class="demo-cod-result" style="margin-top:10px;"></div>
+      </div>`;
+    case 'quiniela': return `
+      <div class="fp-visual-body">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:12px;">Vista previa del formulario</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="padding:10px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:8px;font-size:12px;color:var(--tierra);">Bloque <strong style="color:var(--negro);">Tus datos</strong> — Nombre, email, teléfono, ciudad, año de nacimiento</div>
+          <div style="padding:10px 12px;background:var(--albero);border:1px solid var(--polvo);border-radius:8px;font-size:12px;color:var(--tierra);">Bloque <strong style="color:var(--negro);">Perfil taurino</strong> — Abonado, frecuencia, torero favorito</div>
+          <div style="padding:10px 12px;background:#FAEEDA;border:1px solid #BA7517;border-radius:8px;font-size:12px;color:var(--caoba);">Bloque <strong>La quiniela</strong> — 6 preguntas (1 pt cada una) + pregunta estrella (3 pts) = 9 pts máximo</div>
+        </div>
+        <div style="margin-top:12px;padding:10px 12px;background:var(--negro);border-radius:8px;font-size:12px;color:rgba(245,222,179,.6);">⏱ Tiempo estimado de relleno: <strong style="color:var(--alazan2);">menos de 2 minutos</strong></div>
+      </div>`;
+    case 'confirmacion': return `
+      <div class="fp-visual-body">
+        <div style="text-align:center;padding:16px 0;">
+          <div style="font-size:36px;margin-bottom:10px;">✓</div>
+          <div style="font-family:var(--ff-display);font-size:18px;font-weight:700;color:var(--negro);margin-bottom:6px;">¡Quiniela enviada!</div>
+          <div style="font-size:13px;color:var(--tierra);margin-bottom:16px;line-height:1.6;">Tus predicciones han quedado guardadas.<br>El resultado se publicará al finalizar la corrida.</div>
+          <div style="background:var(--albero);border-radius:8px;padding:12px;border:1px solid var(--polvo);text-align:left;">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:8px;">Tus predicciones</div>
+            <div style="font-size:12px;color:var(--negro);line-height:1.9;">
+              Orejas totales: <strong>2 orejas</strong><br>
+              Vuelta al ruedo: <strong>Sí</strong><br>
+              Puerta grande: <strong>Sí, uno</strong><br>
+              Más orejas: <strong>Roca Rey</strong><br>
+              Aviso: <strong>No</strong><br>
+              Aguado oreja: <strong>Sí, una</strong><br>
+              ★ Estrella: <strong>Roca Rey · 2 orejas</strong>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    case 'resultado': return `
+      <div class="fp-visual-body">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tierra);margin-bottom:12px;">Comparativa de resultados</div>
+        <table class="resultado-table">
+          <thead><tr><th>Pregunta</th><th>Resultado real</th><th>Tu predicción</th><th></th></tr></thead>
+          <tbody>
+            <tr><td class="td-q">Orejas totales</td><td class="td-real">2 orejas</td><td class="td-pred">2 orejas</td><td class="td-ok">✓ +1</td></tr>
+            <tr><td class="td-q">Vuelta al ruedo</td><td class="td-real">Sí</td><td class="td-pred">Sí</td><td class="td-ok">✓ +1</td></tr>
+            <tr><td class="td-q">Puerta grande</td><td class="td-real">No</td><td class="td-pred">Sí, uno</td><td class="td-no">✗</td></tr>
+            <tr><td class="td-q">Más orejas</td><td class="td-real">Roca Rey</td><td class="td-pred">Roca Rey</td><td class="td-ok">✓ +1</td></tr>
+            <tr><td class="td-q">Aviso torero</td><td class="td-real">No</td><td class="td-pred">No</td><td class="td-ok">✓ +1</td></tr>
+            <tr><td class="td-q">Aguado oreja</td><td class="td-real">No</td><td class="td-pred">Sí, una</td><td class="td-no">✗</td></tr>
+            <tr><td class="td-q">★ Estrella</td><td class="td-real">Roca Rey · 2</td><td class="td-pred">Roca Rey · 2</td><td class="td-ok">✓ +3</td></tr>
+          </tbody>
+        </table>
+        <div class="score-final"><span class="sf-label">Puntuación total</span><span class="sf-val">7 / 9 pts</span></div>
+      </div>`;
+    case 'ganador': return `
+      <div class="fp-visual-body" style="background:linear-gradient(135deg,var(--negro),#3D1F00);border-radius:var(--radius-md);">
+        <div class="ganador-screen" style="border:none;background:transparent;">
+          <div class="gs-trophy">🏆</div>
+          <div class="gs-titulo">¡Ganador de la quiniela!</div>
+          <div class="gs-nombre">Carmen Álvarez Ruiz</div>
+          <div class="gs-puntos">7 de 9 puntos · Primera en enviar con esta puntuación</div>
+          <div class="gs-premio">
+            <div class="gs-premio-label">Premio obtenido</div>
+            <div class="gs-premio-val">Entrada VIP para la próxima corrida</div>
+          </div>
+          <div class="gs-msg">Enhorabuena por tu intuición taurina.<br>El premio se recogerá en taquilla con tu DNI.</div>
+        </div>
+      </div>`;
+    default: return '<div class="fp-visual-body"></div>';
+  }
 }
+
+function validarCodigo2(){
+  const cod=(document.getElementById('codInput2').value||'').trim().toUpperCase();
+  const res=document.getElementById('codResult2');
+  res.style.display='block';
+  const data=codigosValidos[cod];
+  if(!data){res.className='demo-cod-result result-no';res.innerHTML='<strong>✗ Código no válido</strong> — No corresponde a ninguna entrada de este evento.';}
+  else if(data.usado){res.className='demo-cod-result result-used';res.innerHTML='<strong>⚠ Código ya utilizado</strong> — Este código ya fue empleado para participar.';}
+  else{res.className='demo-cod-result result-ok';res.innerHTML='<strong>✓ Código válido — '+data.nombre+'</strong> — Puedes acceder a la quiniela.';}
+}
+
+renderFlujo();
 </script>
-
 </body>
 </html>
