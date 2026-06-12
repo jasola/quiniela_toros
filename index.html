@@ -498,60 +498,62 @@ footer{background:var(--negro);border-top:1px solid rgba(196,114,10,.2);padding:
       </div>
     </div>
 
-    <!-- ESCENARIOS BACANTIX -->
-    <div class="bacantix-title reveal">Tres escenarios posibles según lo que ofrezca Bacantix</div>
-    <div class="escenarios">
-      <div class="esc-card esc-ideal reveal">
-        <span class="esc-num">Escenario ideal</span>
-        <div class="esc-title">Bacantix tiene API en tiempo real</div>
-        <div class="esc-text">El sistema consulta directamente a Bacantix en el momento exacto en que el espectador introduce su código. Incluye entradas de taquilla vendidas hasta el último minuto.</div>
-        <div class="esc-items">
-          <div><span class="esc-dot"></span>Validación instantánea sin demora</div>
-          <div><span class="esc-dot"></span>Cubre ventas en taquilla en tiempo real</div>
-          <div><span class="esc-dot"></span>Sin intervención manual del empresario</div>
-          <div><span class="esc-dot"></span>Solución más robusta y escalable</div>
-        </div>
-      </div>
-      <div class="esc-card esc-b reveal">
-        <span class="esc-num">Escenario B</span>
-        <div class="esc-title">Sincronización automática periódica</div>
-        <div class="esc-text">Si Bacantix no tiene API pero puede exportar los códigos cada pocos minutos, el sistema se actualiza automáticamente. El margen de desajuste es de 5 a 10 minutos máximo.</div>
-        <div class="esc-items">
-          <div><span class="esc-dot"></span>Actualización cada 5–10 minutos</div>
-          <div><span class="esc-dot"></span>Riesgo mínimo y asumible</div>
-          <div><span class="esc-dot"></span>No requiere desarrollo complejo</div>
-          <div><span class="esc-dot"></span>Válido para la mayoría de situaciones</div>
-        </div>
-      </div>
-      <div class="esc-card esc-c reveal">
-        <span class="esc-num">Escenario C</span>
-        <div class="esc-title">Carga manual antes del evento</div>
-        <div class="esc-text">Si Bacantix solo puede exportar la lista una vez, se carga manualmente antes de la corrida. Las entradas de taquilla vendidas después no quedarían incluidas.</div>
-        <div class="esc-items">
-          <div><span class="esc-dot"></span>Más sencillo técnicamente</div>
-          <div><span class="esc-dot"></span>Requiere coordinación previa</div>
-          <div><span class="esc-dot"></span>Entradas de taquilla no cubiertas</div>
-          <div><span class="esc-dot"></span>Aceptable si la venta en taquilla es baja</div>
+    <!-- CONFIRMACION BACANTIX -->
+    <div class="bacantix-title reveal">Integración confirmada con Bacantix</div>
+
+    <div class="reveal" style="background:#E1F5EE;border:1px solid #1D9E75;border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:28px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="font-size:28px;flex-shrink:0;">✓</div>
+        <div>
+          <div style="font-size:15px;font-weight:600;color:#04342C;margin-bottom:6px;">Bacantix cubre todos los requisitos del sistema</div>
+          <div style="font-size:13px;color:#085041;line-height:1.7;">Bacantix dispone de número único por entrada, base de datos de códigos organizada por evento identificado con código propio, y API de consulta en tiempo real. Esto permite la integración directa sin ningún sistema intermedio ni sincronización periódica.</div>
         </div>
       </div>
     </div>
 
-    <!-- PREGUNTAS A BACANTIX -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px;" class="reveal">
+      <div style="background:var(--blanco);border:1px solid var(--polvo);border-radius:var(--radius-md);padding:18px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1D9E75;margin-bottom:8px;">Confirmado ✓</div>
+        <div style="font-size:13px;font-weight:600;color:var(--negro);margin-bottom:4px;">Código único por entrada</div>
+        <div style="font-size:12px;color:var(--tierra);line-height:1.5;">Cada entrada lleva un número único que la identifica de forma inequívoca dentro del sistema Bacantix.</div>
+      </div>
+      <div style="background:var(--blanco);border:1px solid var(--polvo);border-radius:var(--radius-md);padding:18px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1D9E75;margin-bottom:8px;">Confirmado ✓</div>
+        <div style="font-size:13px;font-weight:600;color:var(--negro);margin-bottom:4px;">Base de datos por evento</div>
+        <div style="font-size:12px;color:var(--tierra);line-height:1.5;">Los eventos tienen código propio. La consulta puede filtrarse por código de evento, lo que permite gestionar varias corridas en paralelo sin colisiones.</div>
+      </div>
+      <div style="background:var(--blanco);border:1px solid var(--polvo);border-radius:var(--radius-md);padding:18px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1D9E75;margin-bottom:8px;">Confirmado ✓</div>
+        <div style="font-size:13px;font-weight:600;color:var(--negro);margin-bottom:4px;">API en tiempo real</div>
+        <div style="font-size:12px;color:var(--tierra);line-height:1.5;">La validación se realiza en el momento exacto de la consulta, incluyendo entradas vendidas en taquilla hasta el instante anterior.</div>
+      </div>
+    </div>
+
+    <!-- DETALLE TECNICO API -->
     <div class="bacantix-preguntas reveal">
-      <div class="bp-title">Antes de avanzar: tres preguntas clave para Bacantix</div>
-      <div class="bp-sub">La respuesta a estas preguntas determina qué escenario aplicar y cómo se monta la integración técnica.</div>
+      <div class="bp-title">Cómo se usa la API de Bacantix en la validación</div>
+      <div class="bp-sub">Cada vez que un espectador introduce su código, el sistema realiza estas tres operaciones en menos de un segundo.</div>
       <div class="bp-items">
         <div class="bp-item">
           <div class="bp-q-num">1</div>
-          <div><div class="bp-q-text">¿Pueden generar e imprimir un código alfanumérico único por entrada para un evento concreto?</div><div class="bp-q-why">Sin este código no hay forma de verificar quién tiene entrada. Es el requisito base de todo el sistema.</div></div>
+          <div>
+            <div class="bp-q-text">Consulta de existencia y validez</div>
+            <div class="bp-q-why">El sistema envía a la API de Bacantix el código de entrada y el código de evento. Bacantix responde si ese código existe y pertenece a ese evento concreto. Esto cubre en tiempo real cualquier entrada vendida en taquilla hasta ese momento.</div>
+          </div>
         </div>
         <div class="bp-item">
           <div class="bp-q-num">2</div>
-          <div><div class="bp-q-text">¿Tienen una API o servicio web que permita consultar si un código es válido para un evento en tiempo real?</div><div class="bp-q-why">Esto determina si podemos hacer la validación al instante o necesitamos un sistema de sincronización periódica.</div></div>
+          <div>
+            <div class="bp-q-text">Comprobación de uso previo</div>
+            <div class="bp-q-why">Antes de dar acceso, el sistema verifica en su propia base de datos si ese código ya fue utilizado para participar en la quiniela de ese evento. Un código válido solo puede usarse una vez. Esta comprobación es interna — no depende de Bacantix.</div>
+          </div>
         </div>
         <div class="bp-item">
           <div class="bp-q-num">3</div>
-          <div><div class="bp-q-text">¿Esa consulta incluye las entradas vendidas en taquilla hasta el momento de la consulta?</div><div class="bp-q-why">La venta en taquilla puede estar activa hasta el inicio de la corrida. Si la API no la incluye, necesitamos el escenario de sincronización periódica.</div></div>
+          <div>
+            <div class="bp-q-text">Marcado del código como utilizado</div>
+            <div class="bp-q-why">En el momento en que el espectador envía su quiniela, el código queda registrado como consumido. Si alguien intenta usar el mismo código después, el sistema lo rechaza aunque Bacantix lo siga considerando una entrada válida.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -763,7 +765,7 @@ const pasos=[
     title:'Introduce tu código, <em>el sistema comprueba</em>',
     body:'Antes de ver la quiniela, el espectador introduce el código de su entrada. El sistema consulta a Bacantix en tiempo real: ¿existe este código? ¿ya fue usado? Solo si las dos respuestas son correctas, accede.',
     tags:['Consulta en tiempo real','Cubre ventas en taquilla','Un uso por entrada'],
-    tech:'Al pulsar "Validar", la página lanza una llamada a la API de Bacantix (o a Google Sheets si se usa sincronización periódica). Bacantix responde: válido / inválido / ya usado. Si es válido, el código queda marcado como "en uso" para que nadie más pueda emplearlo. Todo ocurre en menos de 1 segundo.',
+    tech:'La página lanza dos llamadas simultáneas al pulsar "Validar". Primera: consulta a la API de Bacantix enviando el código de entrada y el código de evento — Bacantix responde si es válido en tiempo real, incluyendo ventas en taquilla. Segunda: consulta interna para comprobar si ese código ya fue usado en la quiniela. Solo si ambas respuestas son favorables se da acceso. Todo ocurre en menos de un segundo.',
     visual:'validacion'
   },
   {
